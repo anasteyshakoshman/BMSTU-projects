@@ -25,6 +25,7 @@ int main()
 	{
 		std::cout << vector3[i] << "  ";       
 	}
+	delete [] mus;
 	system("pause");
 	return 0;
 }
