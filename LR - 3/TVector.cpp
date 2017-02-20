@@ -10,7 +10,7 @@ TVector::TVector()
 
 TVector::~TVector()
 {
-	delete[] Data;
+	delete [] Data;
 }
 
 
@@ -64,7 +64,7 @@ TVector& TVector:: operator*=(const double chislo)
 }
 
 
-TVector operator *(double chislo, const TVector & vec)
+TVector operator *(const double chislo, const TVector & vec)
 {
 	TVector product = TVector(vec);
 	product *= chislo;
