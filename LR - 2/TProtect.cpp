@@ -22,14 +22,14 @@ void TProtect::SetType(const int ch)
 	Type = ch;
 }
 
-bool TProtect::GetType()
+bool TProtect::GetType() const
 {
 	return Type;
 }
 
 
 
-void TProtect::print()
+void TProtect::print() const
 {
 	std::cout <<"Name : " << Name << std::endl;
 	if (Type == 1) std::cout << "Type : Symmetric" << std::endl << std::endl;
