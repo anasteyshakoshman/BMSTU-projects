@@ -32,8 +32,8 @@ bool TProtect::GetType() const
 void TProtect::print() const
 {
 	std::cout <<"Name : " << Name << std::endl;
-	if (Type == 1) std::cout << "Type : Symmetric" << std::endl << std::endl;
-	if (Type == 0) std::cout << "Type : Asymmetric" << std::endl << std::endl;
+	if (Type == true) std::cout << "Type : Symmetric" << std::endl << std::endl;
+	if (Type == false) std::cout << "Type : Asymmetric" << std::endl << std::endl;
 }
 
 
