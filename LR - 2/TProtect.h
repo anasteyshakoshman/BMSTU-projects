@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include <iostream>
 #include <string>
 
@@ -13,7 +13,7 @@ public:
 	~TProtect();
 	void SetName(const std::string nm);
 	void SetType(const int ch);
-	bool GetType();
-	void print();
+	bool GetType() const;
+	void print() const;
 };
 
