@@ -8,7 +8,7 @@ TGoods::TGoods()
 	Price = 0.0;
 }
 
-float TGoods::Cost(float percent)
+float TGoods::Cost(const float percent) const
 {
 	float cost = (Price * percent) / 100;   //на сколько цена увеличится
 	cost += Price;    //закупочная цена + на сколько цена увеличится
@@ -16,7 +16,7 @@ float TGoods::Cost(float percent)
 }
 
 
-void TGoods::Print()
+void TGoods::Print() const 
 {
 	std::cout << "\nName : " << Name << std::endl;
 	std::cout << "\nQuantity : " << Quantity << std::endl;
@@ -24,21 +24,21 @@ void TGoods::Print()
 }
 
 
-void TGoods::SetName(std::string name)
+void TGoods::SetName(const std::string name) const
 {
 	Name = name;
 }
 
-void TGoods::SetQuantity(int quan)
+void TGoods::SetQuantity(const int quan) const
 {
 	Quantity = quan;
 }
 
-void TGoods::SetPrice(float price)
+void TGoods::SetPrice(const float price) const
 {
 	Price = price;
 }
-int TGoods::GetQuantity()
+int TGoods::GetQuantity() const
 {
 	return Quantity;
 }
