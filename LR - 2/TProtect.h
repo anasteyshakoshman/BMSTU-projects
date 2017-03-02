@@ -10,7 +10,6 @@ class TProtect
 
 public:
 	TProtect();
-	~TProtect();
 	void SetName(const std::string nm);
 	void SetType(const int ch);
 	bool GetType() const;
