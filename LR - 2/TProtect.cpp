@@ -3,13 +3,9 @@
 
 TProtect::TProtect()
 {
+	Name = " ";
+	Type = 0;
 }
-
-
-TProtect::~TProtect()
-{
-}
-
 
 void TProtect::SetName(const std::string nm)
 {
