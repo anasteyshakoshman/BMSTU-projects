@@ -3,6 +3,7 @@
 
 TGoods::TGoods()
 {
+	Name = " ";
 	Quantity = 0;
 	Price = 0.0;
 }
@@ -41,4 +42,6 @@ int TGoods::GetQuantity()
 {
 	return Quantity;
 }
+
+
 
