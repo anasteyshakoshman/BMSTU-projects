@@ -15,6 +15,6 @@ public:
 	void Print() const;
 	void SetName(const std::string name)const;  	
 	void SetQuantity(const int quan) const;
-	void SetPrice(float cost);
-	int GetQuantity();
+	void SetPrice(const float cost) const;
+	int GetQuantity() const;
 };
