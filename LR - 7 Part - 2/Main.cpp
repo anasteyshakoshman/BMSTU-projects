@@ -99,7 +99,7 @@ void main()
 	std::string line;
 	int step = 1;
 	bool check = 0;
-	while (getline(pFile, line))
+	do
 	{
 		std::vector <std::string> text = newVector(line);
 
@@ -121,6 +121,7 @@ void main()
 		}
 		step++;
 	}
+	while (getline(pFile, line) != 0)
 	if (check == 0)
 	{
 		std::cout << "This file haven't this word" << std::endl;
