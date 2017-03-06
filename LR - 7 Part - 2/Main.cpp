@@ -121,7 +121,7 @@ void main()
 		}
 		step++;
 	}
-	while (getline(pFile, line) != 0)
+	while (getline(pFile, line))
 	if (check == 0)
 	{
 		std::cout << "This file haven't this word" << std::endl;
