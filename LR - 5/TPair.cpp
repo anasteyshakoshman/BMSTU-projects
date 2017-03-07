@@ -60,19 +60,18 @@ bool TPair::operator <(const TPair & b)
 }
 
 	//методы сравнения полей :
-bool TPair::operator ==(const TPair & b)
+bool TPair::operator ==(const TPair & b) const
 {
 	if (First == b.First && Second == b.Second) return 1;
 	else return 0;
 }
 
-bool TPair::operator !=(const TPair & b)
+bool operator !=(const TPair & a, const TPair & b)
 {
-	if (First != b.First && Second != b.Second) return 1;
-	else return 0;
+	return ((a == b) ? 0 : 1);
 }
 
-//глобальные операторы-функции ввода-вывода :
+//глобальные оператор-функции ввода-вывода :
 
 std::istream& operator>>(std::istream & in, TPair & p)
 {
