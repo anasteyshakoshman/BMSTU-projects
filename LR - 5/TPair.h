@@ -34,11 +34,9 @@ public:
 
 	//методы сравнения полей :
 
-	bool operator ==(const TPair & b);
+	bool operator ==(const TPair & b) const;
 
-	bool operator !=(const TPair & b);
-		
-
+	
 	//виртуальные методы сравнения полей:
 
 	virtual bool operator >(const TPair & b);
@@ -55,3 +53,9 @@ public:
 };
 
 
+bool operator !=(const TPair & a, const TPair & b);
+
+
+std::istream & operator>>(std::istream & in, TPair & p);
+
+std::ostream & operator<<(std::ostream & out, TPair & p);
