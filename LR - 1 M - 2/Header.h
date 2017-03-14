@@ -40,7 +40,7 @@ public:
 };
 
 
-//пponoтипы функций:
+//пpoтoтипы функций:
 int intFromString(const char * data);
 bool boolFromString(const char * data);
 float floatFromString(const char * data);
