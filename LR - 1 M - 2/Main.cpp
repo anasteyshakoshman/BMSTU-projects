@@ -14,7 +14,7 @@ int main()
     
 	try
 	{
-		intFromString("2 147 483 647 999");          //превышения максимума
+		intFromString("2147483647999");          //превышения максимума
 	}
 	catch (TCastException & e)
 	{
