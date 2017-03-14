@@ -19,7 +19,6 @@ int intFromString(const char * data)
 			number = number * 10 + tmp;
 			ind++;
 		}
-		else if (data[ind] == ' ') ind++;
 		else throw TUnknown("This line is unknown!!");
 	}
 	if (minus == true) number *= (-1);
@@ -91,7 +90,6 @@ float floatFromString(const char * data)
 				ind++;
 			}
 		}
-		else if (data[ind] == ' ') ind++;
 		else throw TUnknown("This line is unknown!!");
 	}
 	if (minus == true) number *= (-1);
