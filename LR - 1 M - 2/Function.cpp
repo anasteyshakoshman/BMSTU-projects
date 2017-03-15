@@ -32,11 +32,11 @@ bool boolFromString(const char * data)
 {
 	if (!strcmp(data, "0") || !strcmp(data, "false") || !strcmp(data, "FALSE") || !strcmp(data, "False"))
 	{
-		return 0;
+		return false;
 	}
 	if (!strcmp(data, "1") || !strcmp(data, "true") || !strcmp(data, "TRUE") || !strcmp(data, "True"))
 	{
-		return 1;
+		return true;
 	}
 	else throw TUnknown("This line is unknown!!");
 }
