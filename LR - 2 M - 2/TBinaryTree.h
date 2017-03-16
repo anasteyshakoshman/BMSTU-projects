@@ -119,7 +119,7 @@ public:
 			if (pRoot->Data > value) pRoot = pRoot->Left;
 			else pRoot = pRoot->Right;
 		} while (pRoot);
-		throw TNotFoundException("This element wasn't found!");
+		throw TNotFoundException("This element wasn't find!");
 	}
 
 	friend std::ostream& operator << (std::ostream & out, const TBinaryTree& tree);
