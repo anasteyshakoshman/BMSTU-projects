@@ -56,15 +56,15 @@ TInteger& TInteger::operator *=(const long long int number)
 TInteger& TInteger::operator %=(const long long int number)
 {
 	Error(number);
-	Num = Num % number;         //äåëàòü ïðîâåðêó íå íàäî, ò.ê. ïðè äåëåíèè ïî ìîäóëþ ðåçóëüòàò 
-	return *this;                //íå ìîæåò ïîëó÷èòñÿ áîëüøå ÷åì èñõîäíîå çíà÷åíèå
+	Num = Num % number;       
+	return *this;              
 }
 
 TInteger& TInteger::operator /= (const long long int number)
 {
 	Error(number);
-	Num = Num / number;     //äåëàòü ïðîâåðêó íå íàäî, ò.ê. ïðè äåëåíèè ðåçóëüòàò
-	return *this;           //íå ìîæåò ïîëó÷èòñÿ áîëüøå ÷åì èñõîäíîå çíà÷åíèå
+	Num = Num / number;    
+	return *this;           
 }
 
 
@@ -139,16 +139,16 @@ TInteger& TInteger::operator *= (const TInteger& el)
 
 TInteger& TInteger::operator %=(const TInteger& el)
 {
-	Num = Num % el.Num;          //äåëàòü ïðîâåðêó íå íàäî, ò.ê. ïðè äåëåíèè ïî ìîäóëþ ðåçóëüòàò 
-	return *this;                //íå ìîæåò ïîëó÷èòñÿ áîëüøå ÷åì èñõîäíîå çíà÷åíèå
+	Num = Num % el.Num;         
+	return *this;             
 }
 
 
 
 TInteger& TInteger::operator /= (const TInteger& el)
 {
-	Num = Num / el.Num;     //äåëàòü ïðîâåðêó íå íàäî, ò.ê. ïðè äåëåíèè ðåçóëüòàò
-	return *this;           //íå ìîæåò ïîëó÷èòñÿ áîëüøå ÷åì èñõîäíîå çíà÷åíèå
+	Num = Num / el.Num;    
+	return *this;          
 }
 
 
@@ -197,7 +197,7 @@ TInteger operator /(const TInteger& first, const long long int number)
 TInteger operator *(const TInteger& first, const long long int number)
 {
 	TInteger rez = first;
-	rez *= number;             //ïðîâåðêà ñäåëàíà â îïåðàòîðå *=
+	rez *= number;             
 	return rez;
 }
 
@@ -205,7 +205,7 @@ TInteger operator *(const TInteger& first, const long long int number)
 TInteger operator +(const TInteger& first, const long long int number)
 {
 	TInteger summa = first;
-	summa += number;          //ïðîâåðêà ñäåëàíà â îïåðàòîðå +=
+	summa += number;          
 	return summa;
 }
 
@@ -213,7 +213,7 @@ TInteger operator +(const TInteger& first, const long long int number)
 TInteger operator -(const TInteger& first, const long long int number)
 {
 	TInteger summa = first;
-	summa -= number;          //ïðîâåðêà ñäåëàíà â îïåðàòîðå -=
+	summa -= number;          
 	return summa;
 }
 
@@ -249,22 +249,22 @@ TInteger operator /(const long long int number, const TInteger& second)
 TInteger operator *(const long long int number, const TInteger& second)
 {
 	TInteger rez = number;
-	rez *= second;          //ïðîâåðêà ñäåëàíà â îïåðàòîðå *=
+	rez *= second;         
 	return rez;
 }
 
 
 TInteger operator +(const long long int  number, const TInteger& second)
 {
-	TInteger summa = number;    //ïðîâåðêà ñäåëàíà â îïåðàòîðå =
-	summa += second;            //ïðîâåðêà ñäåëàíà â îïåðàòîðå +=
+	TInteger summa = number;    
+	summa += second;            
 	return summa;
 }
 
 TInteger operator -(const long long int number, const TInteger& second)
 {
-	TInteger summa = number;      //ïðîâåðêà ñäåëàíà â îïåðàòîðå =
-	summa -= second;            //ïðîâåðêà ñäåëàíà â îïåðàòîðå -=
+	TInteger summa = number;      
+	summa -= second;            
 	return summa;
 }
 
@@ -304,9 +304,40 @@ TInteger operator /(const TInteger& first, const TInteger& second)
 TInteger operator *(const TInteger& first, const TInteger& second)
 {
 	TInteger rez = first;
-	rez *= second;          //ïðîâåðêà ñäåëàíà â îïåðàòîðå *=
+	rez *= second;          
 	return rez;
 }
 
 
-TInteger operator +(const TInteg
+TInteger operator +(const TInteger first, const TInteger second)
+{   
+	TInteger summa = first;
+	summa += second;            
+	return summa;
+}
+
+
+TInteger operator -(const TInteger& first, const TInteger& second)
+{
+	TInteger summa = first;
+	summa -= second;            
+	return summa;
+}
+
+bool operator !=(const TInteger first, const TInteger second)
+{
+	return ((first == second) ? false : true );
+}
+
+ 
+bool operator >(const TInteger first, const TInteger second)
+{
+	return (((first == second) || (first < second)) ? false : true);
+}
+
+
+std::ostream & operator<<(std::ostream & out, const TInteger & el)
+{
+	out << el.Num;
+	return out;
+}
