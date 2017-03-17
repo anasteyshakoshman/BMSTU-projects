@@ -46,7 +46,7 @@ TInteger& TInteger::operator +=(const long long int number)
 
 TInteger& TInteger::operator *=(const long long int number)
 {
-	Error(number);
+	//Error(number) не нужно, т.к., если Num == 0, то ошибки не будет
 	long long int rez = Num * number;
 	Error(rez);
 	Num = rez;
