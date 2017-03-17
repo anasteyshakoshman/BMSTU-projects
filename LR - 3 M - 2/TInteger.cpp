@@ -56,15 +56,15 @@ TInteger& TInteger::operator *=(const long long int number)
 TInteger& TInteger::operator %=(const long long int number)
 {
 	Error(number);
-	Num = Num % number;       
-	return *this;              
+	Num = Num % number;         //делать проверку не надо, т.к. при делении по модулю результат 
+	return *this;                //не может получится больше чем исходное значение
 }
 
 TInteger& TInteger::operator /= (const long long int number)
 {
 	Error(number);
-	Num = Num / number;    
-	return *this;           
+	Num = Num / number;     //делать проверку не надо, т.к. при делении результат
+	return *this;           //не может получится больше чем исходное значение
 }
 
 
@@ -139,16 +139,16 @@ TInteger& TInteger::operator *= (const TInteger& el)
 
 TInteger& TInteger::operator %=(const TInteger& el)
 {
-	Num = Num % el.Num;         
-	return *this;             
+	Num = Num % el.Num;          //делать проверку не надо, т.к. при делении по модулю результат 
+	return *this;                //не может получится больше чем исходное значение
 }
 
 
 
 TInteger& TInteger::operator /= (const TInteger& el)
 {
-	Num = Num / el.Num;    
-	return *this;          
+	Num = Num / el.Num;     //делать проверку не надо, т.к. при делении результат
+	return *this;           //не может получится больше чем исходное значение
 }
 
 
@@ -197,7 +197,7 @@ TInteger operator /(const TInteger& first, const long long int number)
 TInteger operator *(const TInteger& first, const long long int number)
 {
 	TInteger rez = first;
-	rez *= number;             
+	rez *= number;             //проверка сделана в операторе *=
 	return rez;
 }
 
@@ -205,7 +205,7 @@ TInteger operator *(const TInteger& first, const long long int number)
 TInteger operator +(const TInteger& first, const long long int number)
 {
 	TInteger summa = first;
-	summa += number;          
+	summa += number;          //проверка сделана в операторе +=
 	return summa;
 }
 
@@ -213,7 +213,7 @@ TInteger operator +(const TInteger& first, const long long int number)
 TInteger operator -(const TInteger& first, const long long int number)
 {
 	TInteger summa = first;
-	summa -= number;          
+	summa -= number;          //проверка сделана в операторе -=
 	return summa;
 }
 
@@ -249,22 +249,22 @@ TInteger operator /(const long long int number, const TInteger& second)
 TInteger operator *(const long long int number, const TInteger& second)
 {
 	TInteger rez = number;
-	rez *= second;         
+	rez *= second;          //проверка сделана в операторе *=
 	return rez;
 }
 
 
 TInteger operator +(const long long int  number, const TInteger& second)
 {
-	TInteger summa = number;    
-	summa += second;            
+	TInteger summa = number;    //проверка сделана в операторе =
+	summa += second;            //проверка сделана в операторе +=
 	return summa;
 }
 
 TInteger operator -(const long long int number, const TInteger& second)
 {
-	TInteger summa = number;      
-	summa -= second;            
+	TInteger summa = number;      //проверка сделана в операторе =
+	summa -= second;            //проверка сделана в операторе -=
 	return summa;
 }
 
@@ -304,7 +304,7 @@ TInteger operator /(const TInteger& first, const TInteger& second)
 TInteger operator *(const TInteger& first, const TInteger& second)
 {
 	TInteger rez = first;
-	rez *= second;          
+	rez *= second;          //проверка сделана в операторе *=
 	return rez;
 }
 
@@ -312,7 +312,7 @@ TInteger operator *(const TInteger& first, const TInteger& second)
 TInteger operator +(const TInteger first, const TInteger second)
 {   
 	TInteger summa = first;
-	summa += second;            
+	summa += second;            //проверка сделана в операторе +=
 	return summa;
 }
 
@@ -320,7 +320,7 @@ TInteger operator +(const TInteger first, const TInteger second)
 TInteger operator -(const TInteger& first, const TInteger& second)
 {
 	TInteger summa = first;
-	summa -= second;            
+	summa -= second;            //проверка сделана в операторе -=
 	return summa;
 }
 
@@ -341,3 +341,11 @@ std::ostream & operator<<(std::ostream & out, const TInteger & el)
 	out << el.Num;
 	return out;
 }
+
+
+
+
+
+
+
+
