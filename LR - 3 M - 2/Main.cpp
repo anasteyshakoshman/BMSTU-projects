@@ -84,13 +84,16 @@ void main()
 	if (d < 99999) std::cout << d << std::endl;
 	f = d * d;
 	std::cout << f << std::endl;
-	f = d * 45;;
-	if ( f != longLen) std::cout << f << std::endl;
+	f = d * 45;
+	if ( f != 45) std::cout << f << std::endl;
 	d = f + 2016;
 	if (d == (f + 2016)) std::cout << d << std::endl;
 	f = d - 34;
 	if (f > 2) std::cout << f << std::endl;
 	a = f / 2;
 	if (a < f)  std::cout << a << std::endl;
+
+	int a = f;
+	std::cout << a << std::endl;
 	system("pause");
 }
