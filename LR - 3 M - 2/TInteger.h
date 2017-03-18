@@ -5,7 +5,9 @@ class TInteger
 {
 	int Num;
 
-public:   
+	bool Error(const long long int);
+	
+	public:   
 	TInteger();
 
 	TInteger(const int);      
@@ -18,7 +20,6 @@ public:
 	TInteger& operator -=(const long long int);
 	bool operator ==(const int) const;
 	bool operator <(const int) const;
-	bool Error(const long long int);
 
 	TInteger& operator ++();
 	TInteger& operator--();
