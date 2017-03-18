@@ -16,6 +16,13 @@ TInteger::TInteger()
 	Num = 0;
 }
 
+
+TInteger::operator int()
+{
+	int a = Num;
+	return a;
+}
+
 TInteger::TInteger(const int number)
 {
 	Num = number;
@@ -46,7 +53,7 @@ TInteger& TInteger::operator +=(const long long int number)
 
 TInteger& TInteger::operator *=(const long long int number)
 {
-	//Error(number) не нужно, т.к., если Num == 0, то ошибки не будет
+	Error(number);
 	long long int rez = Num * number;
 	Error(rez);
 	Num = rez;
@@ -218,13 +225,13 @@ TInteger operator -(const TInteger& first, const long long int number)
 }
 
 
-bool operator !=(const TInteger& first, const long long int number)
+bool operator !=(const TInteger& first, const int number)
 {
 	return ((first == number) ? false : true);
 }
 
 
-bool operator >(const TInteger& first, const long long int number)
+bool operator >(const TInteger& first, const int number)
 {
 	return (((first < number) || (first == number)) ? false : true);
 }
@@ -275,7 +282,7 @@ bool operator !=(const int number, const TInteger& second)
 }
  
 
-bool operator >(const long long int number, const TInteger& second)
+bool operator >(const int number, const TInteger& second)
 {
 	return ((second < number)  ? true : false);
 }
@@ -340,6 +347,89 @@ std::ostream & operator<<(std::ostream & out, const TInteger & el)
 {
 	out << el.Num;
 	return out;
+}
+
+
+
+TInteger operator %(const TInteger& el, const int a)
+{
+	TInteger rez = el;
+	rez %= a;
+	return rez;
+}
+
+
+TInteger operator /(const TInteger& el, const int a)
+{
+	TInteger rez = el;
+	rez /= a;
+	return rez;
+}
+
+
+TInteger operator *(const TInteger& el, const int a)
+{
+	TInteger rez = el;
+	rez *= a;
+	return rez;
+}
+
+
+TInteger operator +(const TInteger& el, const int a)
+{
+	TInteger rez = el;
+	rez += a;
+	return rez;
+}
+
+
+TInteger operator -(const TInteger& el, const int a)
+{
+	TInteger rez = el;
+	rez -= a;
+	return rez;
+}
+
+
+TInteger& TInteger::operator =(const int a)
+{
+	Num = a;
+	return *this;
+}
+
+
+TInteger& TInteger::operator +=(const int a)
+{
+	Num += a;
+	return *this;
+}
+
+
+TInteger& TInteger::operator *=(const int a)
+{
+	Num *= a;
+	return *this;
+}
+
+
+TInteger& TInteger::operator %=(const int a)
+{
+	Num %= a;
+	return *this;
+}
+
+
+TInteger& TInteger::operator /=(const int a)
+{
+	Num /= a;
+	return *this;
+}
+
+
+TInteger& TInteger::operator -=(const int a)
+{
+	Num -= a;
+	return *this;
 }
 
 
