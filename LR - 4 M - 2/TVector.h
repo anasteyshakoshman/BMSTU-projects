@@ -178,14 +178,19 @@ public:
 	void TVector::pop_back()
 	{
 		if (!Count) throw std::length_error("This vector is empty");
+		Ptr[Count-1] = NULL;
 		Count--;
 	}
 
 	void TVector::swap(TVector& other) throw()
 	{
-		std::swap(Count, other.Count);
-		std::swap(InternalCapacity, other.InternalCapacity);
-		std::swap(Ptr, other.Ptr);
+		 TVector tmp;
+
+      		 tmp = *this;
+
+       		 *this = other;
+
+       		 other = tmp;
 	}
 
 	void TVector::resize(size_type count, value_type value = value_type())
