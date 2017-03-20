@@ -29,7 +29,7 @@ public:
 		Ptr = new value_type[InternalCapacity];
 	}
 
-	/*TVector(size_type capacity, value_type init) : InternalCapacity(capacity)
+	TVector(size_type capacity, value_type init) : InternalCapacity(capacity)
 	{
 		Ptr = new value_type[InternalCapacity];
 		Count = capacity;
@@ -37,13 +37,13 @@ public:
 		{
 			Ptr[i] = init;
 		}
-	}*/
+	}
 
 	~TVector()
 	{
 		delete[] Ptr;
-		/*Count = 0;
-		InternalCapacity = 0;*/
+		Count = 0;
+		InternalCapacity = 0;
 	}
 
 	bool empty() const throw()
@@ -76,8 +76,7 @@ public:
 
 	void TVector::reserve(size_type size)
 	{
-		/*if (InternalCapacity >= size) return;
-		if (!size) size++;
+		if (InternalCapacity >= size) return;
 		InternalCapacity = size;
 		value_type * NewPtr = new value_type[InternalCapacity];
 		if (Ptr)
@@ -85,14 +84,7 @@ public:
 			memcpy(NewPtr, Ptr, Count * sizeof(value_type));
 			delete[] Ptr;
 		}
-		Ptr = NewPtr;*/
-		if (Count > size) return;
-		if (!size) size++;
-		value_type *tmp = new value_type[size];
-		memcpy(tmp, Ptr, Count * sizeof(value_type));
-		delete[] Ptr;
-		Ptr = tmp;
-		InternalCapacity = size;
+		Ptr = NewPtr;
 	}
 
 	TVector::TVector(const TVector& rhs)
@@ -116,21 +108,13 @@ public:
 
 	void TVector::push_back(const value_type& value)
 	{
-		if (Count == InternalCapacity) this->reserve(InternalCapacity * 2);
+		if (Count == InternalCapacity)
+		{
+			if (!InternalCapacity) InternalCapacity++;
+			this->reserve(InternalCapacity * 2);
+		}
 		Ptr[Count] = value;
 		Count++;
-
-		/*if (Count < InternalCapacity)
-		{
-			Count++;
-			Ptr[Count] = value;
-		}
-		else
-		{
-			this->reserve(InternalCapacity * 2);
-			Count++;
-			Ptr[Count - 1] = value;
-		}*/
 	}
 
 	reference TVector::at(size_type index)
