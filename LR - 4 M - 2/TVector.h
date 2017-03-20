@@ -103,7 +103,7 @@ public:
 
 	void TVector::push_back(const value_type& value)
 	{
-		if (Count >= InternalCapacity) this->reserve(InternalCapacity * 2);
+		if (Count <= InternalCapacity) this->reserve(InternalCapacity * 2);
 		Ptr[Count] = value;
 		Count++;
 	}
