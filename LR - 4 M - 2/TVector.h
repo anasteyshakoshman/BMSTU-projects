@@ -110,8 +110,8 @@ public:
 	{
 		if (Count == InternalCapacity)
 		{
-			if (!InternalCapacity) InternalCapacity++;
-			this->reserve(InternalCapacity * 2);
+			if (!InternalCapacity)reserve(1);
+			reserve(InternalCapacity * 2);
 		}
 		Ptr[Count] = value;
 		Count++;
