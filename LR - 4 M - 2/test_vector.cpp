@@ -1,5 +1,4 @@
-#include "TVector.h"
-#include <iostream>
+#include"TVector.h"
 
 void printVector(const TVector& vec)
 {
@@ -57,18 +56,18 @@ int main()
 		}
 		catch (const std::exception & e)
 		{
-			std::cout << e.what();
+			std::cout << e.what() << std::endl;
 		}
 
 		try
 		{
-			vec2.resize(UINT64_MAX);
+		vec2.resize(UINT64_MAX);
 		}
 		catch (const std::exception & e)
 		{
-			std::cout << e.what();
+		std::cout << e.what() << std::endl;
 		}
 	}
+		system("pause");
+	}
 
-	system("pause");
-}
