@@ -5,10 +5,12 @@
 #ifndef __TVECTOR_INCLUDED__
 #define __TVECTOR_INCLUDED__
 
+
+template <typename T>
 class TVector
 {
 public:
-	using value_type = int;
+	using value_type = T;
 	using size_type = size_t;
 	using iterator = value_type *;
 	using reference = value_type&;
@@ -33,7 +35,7 @@ public:
 	{
 		Ptr = new value_type[InternalCapacity];
 		Count = capacity;
-		for (int i = 0; i < Count; i++)
+		for (size_type i = 0; i < Count; i++)
 		{
 			Ptr[i] = init;
 		}
@@ -244,7 +246,7 @@ public:
 	iterator TVector::erase(iterator pos)
 	{
 		if (pos > Ptr + Count)  throw std::out_of_range("This pos is more than size of vector!");  
-		for (int i = pos - Ptr; i < Count - 1; i++)	Ptr[i] = Ptr[i + 1];
+		for (size_type i = pos - Ptr; i < Count - 1; i++)	Ptr[i] = Ptr[i + 1];
 		Count--;
 		return pos;
 	}
@@ -256,7 +258,7 @@ public:
 			throw std::out_of_range("This pos is more than size of vector!");
 		}
 		int l = last - Ptr;
-		for (int i = first - Ptr; i < Count - l; i++)	Ptr[i] = Ptr[l + i];    
+		for (size_type i = first - Ptr; i < Count - l; i++)	Ptr[i] = Ptr[l + i];    
 		Count -= l;
 		return first;
 	}
