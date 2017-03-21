@@ -7,6 +7,8 @@ int main()
 	{
 		TNotCopyable obj;
 
+		TRAII object(&obj);
+
 		obj.OpenToWrite("someFile.txt");
 
 		obj.OpenToRead("someOtherFile.txt");
