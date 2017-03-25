@@ -5,12 +5,10 @@
 #ifndef __TVECTOR_INCLUDED__
 #define __TVECTOR_INCLUDED__
 
-
-template <typename T>
 class TVector
 {
 public:
-	using value_type = T;
+	using value_type = int;
 	using size_type = size_t;
 	using iterator = value_type *;
 	using reference = value_type&;
@@ -35,7 +33,7 @@ public:
 	{
 		Ptr = new value_type[InternalCapacity];
 		Count = capacity;
-		for (size_type i = 0; i < Count; i++)
+		for (int i = 0; i < Count; i++)
 		{
 			Ptr[i] = init;
 		}
@@ -112,8 +110,8 @@ public:
 	{
 		if (Count == InternalCapacity)
 		{
-			if (!InternalCapacity)reserve(1);
-			reserve(InternalCapacity * 2);
+			if (!InternalCapacity) InternalCapacity++;
+			this->reserve(InternalCapacity * 2);
 		}
 		Ptr[Count] = value;
 		Count++;
@@ -123,7 +121,7 @@ public:
 	{
 		if (index < 0) throw std::out_of_range(" Incorrect value of index");
 		if (index >= Count) throw std::out_of_range("Index is more than size of vector");
-		return Ptr[index];
+		return Ptr[index]; 
 	}
 
 	value_type TVector::at(size_type index) const
@@ -180,24 +178,19 @@ public:
 	void TVector::pop_back()
 	{
 		if (!Count) throw std::length_error("This vector is empty");
-		Ptr[Count-1] = NULL;
 		Count--;
 	}
 
 	void TVector::swap(TVector& other) throw()
 	{
-		 TVector tmp;
-
-      		 tmp = *this;
-
-       		 *this = other;
-
-       		 other = tmp;
+		std::swap(Count, other.Count);
+		std::swap(InternalCapacity, other.InternalCapacity);
+		std::swap(Ptr, other.Ptr);
 	}
 
 	void TVector::resize(size_type count, value_type value = value_type())
 	{
-		if (count > SIZE_MAX) throw std::overflow_error("The size is more then Size_MAX");
+		if (count >= SIZE_MAX) throw std::overflow_error("The size is more then Size_MAX");
 		if (count = Count) return;
 		value_type * NewPtr = new value_type[count];
 		if (Count > count)
@@ -214,29 +207,35 @@ public:
 
 	iterator TVector::insert(iterator pos, const value_type& value)
 	{
-		if (pos > Ptr + Count)  throw std::out_of_range("This pos is more than size of vector!");
-		if (Count == InternalCapacity) this->reserve(InternalCapacity * 2);
+		size_type j = pos - Ptr;
+		if (j > Count)  throw std::out_of_range("This pos is more than size of vector!");
+		if (!InternalCapacity)  reserve(1);
+		if (Count == InternalCapacity) reserve(InternalCapacity * 2);
 		Count++;
-		for (size_type i = Count - 1; i > pos - Ptr; i--) {
+		for (size_type i = Count - 1; i > j; i--)
+		{
 			Ptr[i] = Ptr[i - 1];
 		}
-		Ptr[pos - Ptr] = value;
+		Ptr[j] = value;
 		return pos;
 	}
 
 	void TVector::insert(iterator pos, size_type count, const value_type& value)
 	{
-		if (count > SIZE_MAX || count + Count > SIZE_MAX) throw std::overflow_error("The size is more then Size_MAX");
-		if (pos > Ptr + Count)  throw std::out_of_range("This pos is more than size of vector!");
+		if (count > SIZE_MAX || count + Count > SIZE_MAX) throw std::overflow_error("The size is more then SIZE_MAX");
+		if (pos - Ptr > Count)  throw std::out_of_range("This pos is more than size of vector!");
 		Count += count;
+		if (!InternalCapacity)  reserve(1);
 		while (InternalCapacity < Count)
 		{
 			this->reserve(InternalCapacity * 2);
 		}
-		for (size_type j = Count - 1; j > pos - Ptr; j--) {
+		size_type k = pos - Ptr;
+		for (size_type j = Count - 1; j > k; j--) 
+		{
 			Ptr[j] = Ptr[j - count];
 		}
-		for (size_type i = pos - Ptr; i < i + count; i++)
+		for (size_type i = k; i < i + count; i++)
 		{
 			Ptr[i] = value;
 		}
@@ -246,7 +245,7 @@ public:
 	iterator TVector::erase(iterator pos)
 	{
 		if (pos > Ptr + Count)  throw std::out_of_range("This pos is more than size of vector!");  
-		for (size_type i = pos - Ptr; i < Count - 1; i++)	Ptr[i] = Ptr[i + 1];
+		for (int i = pos - Ptr; i < Count - 1; i++)	Ptr[i] = Ptr[i + 1];
 		Count--;
 		return pos;
 	}
@@ -258,7 +257,7 @@ public:
 			throw std::out_of_range("This pos is more than size of vector!");
 		}
 		int l = last - Ptr;
-		for (size_type i = first - Ptr; i < Count - l; i++)	Ptr[i] = Ptr[l + i];    
+		for (int i = first - Ptr; i < Count - l; i++)	Ptr[i] = Ptr[l + i];    
 		Count -= l;
 		return first;
 	}
@@ -266,6 +265,9 @@ public:
 
 
 #endif // __TVECTOR_INCLUDED__
+
+
+
 
 
 
