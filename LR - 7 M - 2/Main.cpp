@@ -6,7 +6,7 @@ template <typename T>
 void printVector(const TVector <T> & vec)
 {
 	for (int i = 0; i < vec.size(); ++i)
-		std::cout << vec[i] << " ";
+		std::cout << vec[i] << "  ";
 	std::cout << std::endl;
 }
 
@@ -68,26 +68,15 @@ int main()
 		}
 		catch (const std::exception & e)
 		{
-		std::cout << e.what() << std::endl;
+			std::cout << std::endl << e.what() << std::endl;
 		}
 
-		TVector <double> vec3(16, 5.6);
-		printVector(vec3);
-
-		vec3.insert(vec3.end(), 22, 34.86786);
-		printVector(vec3);
-
-		TVector <char> vec3(10, 'W');
-		printVector(vec3);
-
-		vec3.insert(vec3.end(), 10, 'H');
-		printVector(vec3);
-
+		TVector <double> vec3(16, 5);
+		vec3.insert(vec3.end(), 22, 34);
 		for (int i = 0; i < 10; ++i)
 		{
-			vec3.push_back('Y');
+			vec3.push_back(56);
 		}
-		printVector(vec3);
 	}
 		system("pause");
 	}
