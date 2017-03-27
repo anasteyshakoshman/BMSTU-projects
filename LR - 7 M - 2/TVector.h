@@ -77,7 +77,7 @@ public:
 
 
 
-	void TVector::reserve(size_type size)
+	void reserve(size_type size)
 	{
 		if (InternalCapacity >= size) return;
 		InternalCapacity = size;
@@ -90,7 +90,7 @@ public:
 		Ptr = NewPtr;
 	}
 
-	TVector::TVector(const TVector& rhs)
+	TVector(const TVector& rhs)
 	{
 		Count = rhs.Count;
 		InternalCapacity = rhs.InternalCapacity;
@@ -98,7 +98,7 @@ public:
 		memcpy(Ptr, rhs.Ptr, Count * sizeof(value_type));
 	}
 
-	TVector& TVector::operator=(const TVector& rhs)
+	TVector& operator=(const TVector& rhs)
 	{
 		if (&rhs == this) return *this;
 		if (Ptr) delete[] Ptr;
@@ -109,66 +109,66 @@ public:
 		return *this;
 	}
 
-	void TVector::push_back(const value_type& value)
+	void push_back(const value_type& value)
 	{
 		if (Count == InternalCapacity)
 		{
-			if (!InternalCapacity) InternalCapacity++;
-			this->reserve(InternalCapacity * 2);
+			if (!InternalCapacity) reserve(1);
+			reserve(InternalCapacity * 2);
 		}
 		Ptr[Count] = value;
 		Count++;
 	}
 
-	reference TVector::at(size_type index)
+	reference at(size_type index)
 	{
 		if (index < 0) throw std::out_of_range(" Incorrect value of index");
 		if (index >= Count) throw std::out_of_range("Index is more than size of vector");
 		return Ptr[index]; 
 	}
 
-	value_type TVector::at(size_type index) const
+	value_type at(size_type index) const
 	{
 		if (index < 0) throw std::out_of_range(" Incorrect value of index");
 		if (index >= Count) throw std::out_of_range("Index is more than size of vector");
 		return Ptr[index];
 	}
 
-	reference TVector::operator[](size_type index)
+	reference operator[](size_type index)
 	{
 		return Ptr[index];
 	}
 
-	const_reference TVector::operator[](size_type index) const
+	const_reference operator[](size_type index) const
 	{
 		return Ptr[index];
 	}
 
-	reference TVector::front()
+	reference front()
 	{
 		if (!Count) throw std::length_error("This vector is empty");
 		return Ptr[0];
 	}
 
-	const_reference TVector::front() const
+	const_reference front() const
 	{
 		if (!Count) throw std::length_error("This vector is empty");
 		return Ptr[0];
 	}
 
-	reference TVector::back()
+	reference back()
 	{
 		if (!Count) throw std::length_error("This vector is empty");
 		return Ptr[Count - 1];
 	}
 
-	const_reference TVector::back() const
+	const_reference back() const
 	{
 		if (!Count) throw std::length_error("This vector is empty");
 		return Ptr[Count - 1];
 	}
 
-	void TVector::clear()
+	void clear()
 	{
 		if (Ptr)
 		{
@@ -178,37 +178,37 @@ public:
 		}
 	}
 
-	void TVector::pop_back()
+	void pop_back()
 	{
 		if (!Count) throw std::length_error("This vector is empty");
 		Count--;
 	}
 
-	void TVector::swap(TVector& other) throw()
+	void swap(TVector& other) throw()
 	{
 		std::swap(Count, other.Count);
 		std::swap(InternalCapacity, other.InternalCapacity);
 		std::swap(Ptr, other.Ptr);
 	}
 
-	void TVector::resize(size_type count, value_type value = value_type())
+	void resize(size_type count, value_type value = value_type())
 	{
 		if (count >= SIZE_MAX) throw std::overflow_error("The size is more then Size_MAX");
 		if (count = Count) return;
 		value_type * NewPtr = new value_type[count];
 		if (Count > count)
 		{
-			InternalCapacity = count;
 			memcpy(NewPtr, Ptr, Count * sizeof(value_type));
 			for (Count; Count < count; Count++) Ptr[Count] = value;
 		}
 		else memcpy(NewPtr, Ptr, count * sizeof(value_type));
+		InternalCapacity = count;
 		Count = count;
 		if (Ptr) delete[] Ptr;
 		Ptr = NewPtr;
 	}
 
-	iterator TVector::insert(iterator pos, const value_type& value)
+	iterator insert(iterator pos, const value_type& value)
 	{
 		size_type j = pos - Ptr;
 		if (j > Count)  throw std::out_of_range("This pos is more than size of vector!");
@@ -223,7 +223,7 @@ public:
 		return pos;
 	}
 
-	void TVector::insert(iterator pos, size_type count, const value_type& value)
+	void insert(iterator pos, size_type count, const value_type& value)
 	{
 		if (count > SIZE_MAX || count + Count > SIZE_MAX) throw std::overflow_error("The size is more then SIZE_MAX");
 		if (pos - Ptr > Count)  throw std::out_of_range("This pos is more than size of vector!");
@@ -231,7 +231,7 @@ public:
 		if (!InternalCapacity)  reserve(1);
 		while (InternalCapacity < Count)
 		{
-			this->reserve(InternalCapacity * 2);
+			reserve(InternalCapacity * 2);
 		}
 		size_type k = pos - Ptr;
 		for (size_type j = Count - 1; j > k; j--) 
@@ -245,7 +245,7 @@ public:
 	}
 
 
-	iterator TVector::erase(iterator pos)
+	iterator erase(iterator pos)
 	{
 		if (pos > Ptr + Count)  throw std::out_of_range("This pos is more than size of vector!");  
 		for (size_type i = pos - Ptr; i < Count - 1; i++)	Ptr[i] = Ptr[i + 1];
@@ -253,13 +253,13 @@ public:
 		return pos;
 	}
 
-	iterator TVector::erase(iterator first, iterator last)
+	iterator erase(iterator first, iterator last)
 	{
 		if (first > last && (first > Ptr + Count || last > Ptr + Count))          
 		{
 			throw std::out_of_range("This pos is more than size of vector!");
 		}
-		 l = last - Ptr;
+		size_type l = last - Ptr;
 		for (size_type i = first - Ptr; i < Count - l; i++)	Ptr[i] = Ptr[l + i];    
 		Count -= l;
 		return first;
