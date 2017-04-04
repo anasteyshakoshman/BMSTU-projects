@@ -8,7 +8,7 @@ class TCastException : public std::exception
 public:
 	TCastException() : exception()
 	{}
-	TCastException(const char * const & data) : exception(data)
+	TCastException(const char *  data) : exception(data)
 	{}
 };
 
@@ -17,7 +17,7 @@ class TUnknown : public TCastException
 public:
 	TUnknown() : TCastException()
 	{}
-	TUnknown(const char * const & data) : TCastException(data)
+	TUnknown(const char *  data) : TCastException(data)
 	{}
 };
 
@@ -26,7 +26,7 @@ class TMax : public TCastException
 public:
 	TMax() : TCastException()
 	{}
-	TMax(const char * const & data) : TCastException(data)
+	TMax(const char *  data) : TCastException(data)
 	{}
 };
 
@@ -35,7 +35,7 @@ class TMin : public TCastException
 public:
 	TMin() : TCastException()
 	{}
-	TMin(const char * const & data) : TCastException(data)
+	TMin(const char *  data) : TCastException(data)
 	{}	
 };
 
