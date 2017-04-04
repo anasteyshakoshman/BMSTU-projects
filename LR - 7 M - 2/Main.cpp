@@ -1,5 +1,6 @@
-#include"TVector.h"
+#include"TPoint.h"
 #include <stdint.h>
+#define D_SCL_SECURE_NO_WARNINGS
 
 template <typename T>
 
@@ -64,20 +65,19 @@ int main()
 
 		try
 		{
-		vec2.resize(UINT64_MAX);
+			vec2.resize(UINT64_MAX);
 		}
 		catch (const std::exception & e)
 		{
 			std::cout << std::endl << e.what() << std::endl;
 		}
 
-		TVector <double> vec3(16, 5);
-		vec3.insert(vec3.end(), 22, 34);
+		TVector <double> vec3;
 		for (int i = 0; i < 10; ++i)
 		{
 			vec3.push_back(56);
 		}
+		printVector(vec3);
 	}
-		system("pause");
-	}
-
+	system("pause");
+}
