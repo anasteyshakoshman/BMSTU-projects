@@ -15,17 +15,17 @@ public:
 
 	explicit TScopedPtr(T * p = nullptr)
 	{
-		Ptr = p;   //
+		Ptr = p;   
 	}
 
 	~TScopedPtr()
 	{
-		delete[] Ptr;
+		delete Ptr;
 	}
 
 	void reset(T * p = nullptr)
 	{
-		if (Ptr) delete[] Ptr;
+		if (Ptr) delete Ptr;
 		Ptr = p;
 	}
 
