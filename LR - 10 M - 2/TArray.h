@@ -24,23 +24,18 @@ public:
 	using const_iterator = const iterator;
 
 private:
-	T * Data;
+	T Data[N];
 
 public:
 	TArray()
-	{
-		Data = new value_type[N];
-	}
+	{}
 
 	~TArray()
-	{
-		delete[] Data;
-	}
+	{}
 
 	TArray(std::initializer_list<value_type> init)
 	{
-		Data = new value_type[N];
-		memcpy(begin(), init.begin(), size() * sizeof(size_type));
+		std::copy(begin(), init.begin(), size() * sizeof(size_type));
 	}
 
 	value_type at(size_type index) const
