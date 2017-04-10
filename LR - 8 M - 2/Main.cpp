@@ -20,7 +20,7 @@ void sort(IT beg, IT end)
 {
 	for (IT i = beg; i != end; ++i)
 	{
-		for (IT k = ++beg; k != end; ++k)
+		for (IT k = beg; k != end; ++k)
 		{
 			if (*i > *k) swap(*i, *k);
 		}
