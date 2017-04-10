@@ -1,5 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <list>
+#include <iterator>
+
+
 
 template <typename T>
 
@@ -16,7 +20,7 @@ void sort(IT beg, IT end)
 {
 	for (IT i = beg; i != end; ++i)
 	{
-		for (IT k = i + 1; k != end; ++k)
+		for (IT k = ++beg; k != end; ++k)
 		{
 			if (*i > *k) swap(*i, *k);
 		}
@@ -46,6 +50,18 @@ int main()
 		std::cout << vec[i] << " ";
 	}
 	std::cout << std::endl;
-	system("pause");
+
+	std::list<int> M {3, 34, 7, 5};
+	sort(M.begin(), M.end());
+	std::copy(M.begin(), M.end(), std::ostream_iterator<int>(std::cout, " "));  
+
 	return 0;
 }
+
+
+
+
+
+
+
+
