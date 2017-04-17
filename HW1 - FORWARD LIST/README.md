@@ -56,4 +56,7 @@ list 2 : 45 5 23 653 1 87
 
 After erase_after(it, list2.end())
 list 2 : 45 5 23 1 87
+
+List4(list2.begin(), list2.end())
+23 5 45
 Для продолжения нажмите любую клавишу . . .
