@@ -57,6 +57,8 @@ int main()
 	std::cout << std::endl << "After insert_after(it, 653), it = Head->Next->Next\nlist 2 : " << list2 << std::endl;
 	list2.erase_after(it, list2.end());
 	std::cout << std::endl << "After erase_after(it, list2.end())\nlist 2 : " << list2 << std::endl;
+	TForwardList<int> list4(list2.begin(), list2.end());
+	std::cout << "List4(list2.begin(), list2.end())\n" << list4 << std::endl;
 	return 0;
 
 };
