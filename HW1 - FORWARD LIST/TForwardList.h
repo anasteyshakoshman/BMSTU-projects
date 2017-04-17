@@ -29,81 +29,6 @@ private:
 	Node * Head;
 	size_type Num;
 
-public:
-
-	class TIterator
-	{
-	public:
-
-		Node * Uzel;
-		TForwardList * List;
-
-
-		TIterator(TForwardList * l) : List(l)
-		{
-			Uzel = new Node;
-	
-		}
-
-		TIterator(Node * uzel, TForwardList * l) : List(l), Uzel(uzel) { };
-
-		TIterator(const TIterator & obj)
-		{
-			Uzel = obj.Uzel;
-			List = obj.List;
-		}
-
-		TIterator & operator=(const TIterator & obj)
-		{
-			if (&obj == this) return *this;
-			if (Uzel) delete Uzel;
-			Uzel = obj.Uzel;
-			if (List) delete List;
-			List = obj.List;
-			return *this;
-		}
-
-		bool operator==(const TIterator & other) const
-		{
-			return ((Uzel == other.Uzel) && (List == other.List));
-		};
-
-		bool operator!=(const TIterator & other) const
-		{
-			return (Uzel != other.Uzel);
-		};
-
-		const_reference operator*() const
-		{
-			if (Uzel) return (Uzel->Data);
-			else throw std::exception("It's the end of list");
-		};
-
-		reference operator*() 
-		{
-			if (Uzel) return (Uzel->Data);
-			else throw std::exception("It's the end of list");
-		}
-
-
-		TIterator & operator++()
-		{
-			if (Uzel) Uzel = Uzel->Next;
-			else throw std::exception("It's the end of list");
-			return *this;
-		};
-
-	};
-	friend class TForwardList;
-
-
-private:
-
-
-	using iterator = TIterator;
-	using const_iterator = const TIterator;
-
-
 
 public:
 
@@ -133,32 +58,7 @@ public:
 		}
 	};  
 
-	TForwardList(TIterator first, TIterator last)
-	{
-		Head = nullptr;
-		Node * tmp = nullptr;
-		las++;
-		while (first != last)
-		{
-			if (!Head)
-			{
-				Head = new Node();
-				if (!Head) throw TMemoryLeaks("Memory leaks");
-				Head->Next = nullptr;
-				Head->Data = *first;
-				first++;
-			}
-			else
-			{
-				tmp = new Node();
-				if (!tmp) throw TMemoryLeaks("Memory leaks");
-				tmp->Data = *first;
-				tmp->Next = Head;
-				Head = tmp;
-				first++;
-			}
-		}
-	}
+	
 
 
 	friend std::ostream & operator <<(std::ostream & out, TForwardList & obj)
@@ -498,6 +398,82 @@ public:
 		}
 	};
 
+	class TIterator
+	{
+	public:
+
+		Node * Uzel;
+		TForwardList * List;
+
+
+		TIterator(TForwardList * l) : List(l)
+		{
+			Uzel = new Node;
+
+		}
+
+		TIterator(Node * uzel, TForwardList * l) : List(l), Uzel(uzel) { };
+
+		TIterator(const TIterator & obj)
+		{
+			Uzel = obj.Uzel;
+			List = obj.List;
+		}
+
+		TIterator & operator=(const TIterator & obj)
+		{
+			if (&obj == this) return *this;
+			if (Uzel) delete Uzel;
+			Uzel = obj.Uzel;
+			if (List) delete List;
+			List = obj.List;
+			return *this;
+		}
+
+		bool operator==(const TIterator & other) const
+		{
+			return ((Uzel == other.Uzel) && (List == other.List));
+		};
+
+		bool operator!=(const TIterator & other) const
+		{
+			return (Uzel != other.Uzel);
+		};
+
+		const_reference operator*() const
+		{
+			if (Uzel) return (Uzel->Data);
+			else throw std::exception("It's the end of list");
+		};
+
+		reference operator*()
+		{
+			if (Uzel) return (Uzel->Data);
+			else throw std::exception("It's the end of list");
+		}
+
+
+		TIterator & operator++()
+		{
+			if (Uzel) Uzel = Uzel->Next;
+			else throw std::exception("It's the end of list");
+			return *this;
+		};
+
+	};
+	friend class TForwardList;
+
+
+private:
+
+
+	using iterator = TIterator;
+	using const_iterator = const TIterator;
+
+
+public:
+
+	
 
 
 	iterator insert_after(const_iterator pos, const value_type & value)
@@ -639,4 +615,3 @@ bool operator>=(const TForwardList <Type> & lhs, const  TForwardList<Type> & rhs
 {
 	return !(lhs < rhs);
 };
-
