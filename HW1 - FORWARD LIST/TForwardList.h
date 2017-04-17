@@ -473,7 +473,32 @@ private:
 
 public:
 
-	
+	TForwardList(const_iterator first, const_iterator last)
+	{
+		Head = nullptr;
+		Node * tmp = nullptr;
+		TIterator head(first);
+		while (head.Uzel->Next != last.Uzel)
+		{
+			if (!Head)
+			{
+				Head = new Node;
+				if (!Head) throw TMemoryLeaks("Memory leaks");
+				Head->Next = nullptr;
+				Head->Data = *head;
+				head++;
+			}
+			else
+			{
+				tmp = new Node();
+				if (!tmp) throw TMemoryLeaks("Memory leaks");
+				tmp->Data = *head;
+				tmp->Next = Head;
+				Head = tmp;
+				head++;
+			}
+		}
+	}
 
 
 	iterator insert_after(const_iterator pos, const value_type & value)
@@ -615,3 +640,7 @@ bool operator>=(const TForwardList <Type> & lhs, const  TForwardList<Type> & rhs
 {
 	return !(lhs < rhs);
 };
+
+
+
+
