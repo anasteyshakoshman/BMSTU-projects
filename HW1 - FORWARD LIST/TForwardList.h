@@ -76,27 +76,30 @@ public:
 	{
 		Head = nullptr;
 		Num = obj.Num;
-		Node * tmp1 = nullptr;
-		Node * tmp2 = nullptr;
-		do
+		if (Num)
 		{
-			if (!Head)
+			Node * tmp1 = nullptr;
+			Node * tmp2 = nullptr;
+			do
 			{
-				Head = new Node;
-				if (!Head) throw TMemoryLeaks("Memory leaks!");
-				Head->Data = obj.Head->Data;
-				tmp1 = Head;
-				tmp2 = obj.Head->Next;
-			}
-			else
-			{
-				tmp1->Next = new Node;
-				if (!tmp1->Next) throw TMemoryLeaks("Memory leaks!");
-				tmp1 = tmp1->Next;
-				tmp1->Data = tmp2->Data;
-				tmp2 = tmp2->Next;
-			}
-		} while (tmp2);
+				if (!Head)
+				{
+					Head = new Node;
+					if (!Head) throw TMemoryLeaks("Memory leaks!");
+					Head->Data = obj.Head->Data;
+					tmp1 = Head;
+					tmp2 = obj.Head->Next;
+				}
+				else
+				{
+					tmp1->Next = new Node;
+					if (!tmp1->Next) throw TMemoryLeaks("Memory leaks!");
+					tmp1 = tmp1->Next;
+					tmp1->Data = tmp2->Data;
+					tmp2 = tmp2->Next;
+				}
+			} while (tmp2);
+		}
 	};
 
 	TForwardList & operator =(const TForwardList<value_type> & obj)
@@ -460,6 +463,8 @@ public:
 			return *this;
 		};
 
+		
+
 	};
 	friend class TForwardList;
 
@@ -478,7 +483,7 @@ public:
 		Head = nullptr;
 		Node * tmp = nullptr;
 		TIterator head(first);
-		while (head.Uzel->Next != last.Uzel)
+		while (head.Uzel != last.Uzel)
 		{
 			if (!Head)
 			{
@@ -487,6 +492,7 @@ public:
 				Head->Next = nullptr;
 				Head->Data = *head;
 				head++;
+				Num++;
 			}
 			else
 			{
@@ -496,8 +502,10 @@ public:
 				tmp->Next = Head;
 				Head = tmp;
 				head++;
+				Num++;
 			}
 		}
+		reverse();
 	}
 
 
@@ -514,8 +522,8 @@ public:
 			nodeNew.Uzel->Next = next.Uzel;
 		}
 		TIterator after(pos);
-		after++;
-		after++;
+		after++;  after++;
+		Num++;
 		return after;
 	};
 
@@ -525,6 +533,7 @@ public:
 		tmp++;   tmp++;
 		delete position.Uzel->Next;
 		position.Uzel->Next = tmp.Uzel;
+		Num--;
 		return tmp;
 	};
 
@@ -538,6 +547,7 @@ public:
 			delete start.Uzel->Next;
 			start.Uzel->Next = tmp.Uzel;
 			st++;
+			Num--;
 		}
 		return end;
 	};
