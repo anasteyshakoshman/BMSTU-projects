@@ -59,5 +59,5 @@ list 2 : 45 23 1 8
 
 List4(list2.begin(), list2.end())
 45 23 1 8
-first element of list245
+first element of list2   45
 Для продолжения нажмите любую клавишу . . .
