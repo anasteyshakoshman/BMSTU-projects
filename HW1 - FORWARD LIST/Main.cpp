@@ -46,19 +46,23 @@ int main()
 	list2.unique();
 	std::cout << std::endl << "After unique()\nlist 2 : " << list2 << std::endl;
 	list2.reverse();
-	std::cout << std::endl << "After reverse()\nlist 2 : " << list2 << std::endl;
-	list2.insert_after(list2.begin(), 8);
+	std::cout << std::endl << "After reverse()\nlist 2 : " << list2 << std::endl;	
+	list2.insert_after(list2.end(), 8);
 	std::cout << std::endl << "After insert_after(list2.begin(), 8)\nlist 2 : " << list2 << std::endl;
 	list2.erase_after(list2.begin());
 	std::cout << std::endl << "After erase_after(list2.begin())\nlist 2 : " << list2 << std::endl;
 	TForwardList<int>::TIterator it(list2.begin());
-	it++; it++;
-	list2.insert_after(it, 653);
-	std::cout << std::endl << "After insert_after(it, 653), it = Head->Next->Next\nlist 2 : " << list2 << std::endl;
+	it++;
+	TForwardList<int>::TIterator neo = ++it;
+	list2.insert_after(neo, 653);
+	std::cout << std::endl << "After insert_after(neo, 653), neo = Head->Next->Next\nlist 2 : " << list2 << std::endl;
 	list2.erase_after(it, list2.end());
 	std::cout << std::endl << "After erase_after(it, list2.end())\nlist 2 : " << list2 << std::endl;
 	TForwardList<int> list4(list2.begin(), list2.end());
-	std::cout << "List4(list2.begin(), list2.end())\n" << list4 << std::endl;
+	std::cout << std::endl << "List4(list2.begin(), list2.end())\n" << list4 << std::endl;
+	std::cout << "first element of list2" << list2.front() << std::endl;
+	system("pause");
+	
 	return 0;
 
 };
