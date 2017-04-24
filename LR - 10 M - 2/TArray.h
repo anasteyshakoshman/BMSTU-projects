@@ -38,7 +38,7 @@ public:
 		int i = 0;
 		for (auto & val : init)
 		{
-			Ptr[i] = val;
+			Data[i] = val;
 			++i;
 		}	
 	}
