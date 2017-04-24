@@ -46,17 +46,18 @@ After reverse()
 list 2 : 45 5 23 1 87
 
 After insert_after(list2.begin(), 8)
-list 2 : 45 8 5 23 1 87
+list 2 : 45 5 23 1 87 8
 
 After erase_after(list2.begin())
-list 2 : 45 5 23 1 87
+list 2 : 45 23 1 87 8
 
-After insert_after(it, 653), it = Head->Next->Next
-list 2 : 45 5 23 653 1 87
+After insert_after(neo, 653), neo = Head->Next->Next
+list 2 : 45 23 1 653 8
 
 After erase_after(it, list2.end())
-list 2 : 45 5 23 1 87
+list 2 : 45 23 1 8
 
 List4(list2.begin(), list2.end())
-23 5 45
+45 23 1 8
+first element of list245
 Для продолжения нажмите любую клавишу . . .
