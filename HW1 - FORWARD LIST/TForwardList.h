@@ -8,6 +8,7 @@ template <class Type>
 class TForwardList
 {
 private:
+
 	using value_type = Type;
 	using size_type = size_t;
 	using reference = value_type &;
@@ -119,14 +120,16 @@ public:
 		{
 			if (!Head)
 			{
-				Head = new Node();
+				Head = new Node;
+				if (!Head) throw TMemoryLeaks("Memory leaks");
 				Head->Data = obj.Head->Data;
 				tmp1 = Head;
 				tmp2 = obj.Head->Next;
 			}
 			else
 			{
-				tmp1->Next = new Node();
+				tmp1->Next = new Node;
+				if (!tmp1->Next) throw TMemoryLeaks("Memory leaks");
 				tmp1 = tmp1->Next;
 				tmp1->Data = tmp2->Data;
 				tmp2 = tmp2->Next;
@@ -186,11 +189,12 @@ public:
 		Num--;
 	};
 
-	void push_back(const value_type &val)
+	void push_back(const value_type & val)
 	{
 		if (!Head)
 		{
 			Head = new Node;
+			if (!Head) throw TMemoryLeaks("Memory leaks");
 			Head->Data = val;
 			Head->Next = nullptr;
 		}
@@ -198,7 +202,8 @@ public:
 		{
 			Node * 	tmp = Head;
 			while (tmp->Next) tmp = tmp->Next;
-			Node * newNode = new Node();
+			Node * newNode = new Node;
+			if (!newNode) throw TMemoryLeaks("Memory leaks");
 			newNode->Data = val;
 			tmp->Next = newNode;
 			newNode->Next = nullptr;
@@ -206,17 +211,19 @@ public:
 		Num++;
 	};
 
-	void push_front(const value_type &val)
+	void push_front(const value_type & val)
 	{
 		if (!Head)
 		{
-			Head = new Node();
+			Head = new Node;
+			if (!Head) throw TMemoryLeaks("Memory leaks");
 			Head->Data = val;
 			Head->Next = nullptr;
 		}
 		else
 		{
-			Node * tmp = new Node();
+			Node * tmp = new Node;
+			if (!tmp) throw TMemoryLeaks("Memory leaks");
 			tmp->Data = val;
 			tmp->Next = Head;
 			Head = tmp;
@@ -224,7 +231,7 @@ public:
 		Num++;
 	};
 
-	void remove(const value_type &val)
+	void remove(const value_type & val)
 	{
 		Node * tmp = Head;
 		Node * tmp2 = nullptr;
@@ -251,7 +258,7 @@ public:
 		}
 	};
 
-	void resize(size_type num, const value_type val = value_type())
+	void resize(size_type num, const value_type & val = value_type())
 	{
 		if (num < 0) throw TUnknownValue("Uncorrect value of number");
 		if (num == Num) return;
@@ -293,6 +300,7 @@ public:
 			for (i; i < num - Num; ++i)
 			{
 				tmp->Next = new Node;
+				if (!tmp->Next) throw TMemoryLeaks("Memory leaks");
 				tmp->Next->Data = val;
 				tmp = tmp->Next;
 			}
@@ -311,32 +319,34 @@ public:
 		Num = 0;
 	};
 
-	void swap(TForwardList<value_type> &ob)
+	void swap(TForwardList<value_type> & ob)
 	{
 		std::swap(Num, ob.Num);
 		std::swap(Head, ob.Head);
 	}
 
-	void assign(size_type num, const value_type & val)
+	void assign(size_type n, const value_type & val)
 	{
-		if (!num) return;
-		if ((Num + num) > max_size()) throw std::length_error("This number more than SIZE_MAX");
+		if (!n) return;
+		if ((Num + n) > max_size()) throw std::length_error("This number more than SIZE_MAX");
 		if (!Head)
 		{
-			Head = new Node();
+			Head = new Node;
+			if (!Head) throw TMemoryLeaks("Memory leaks");
 			Head->Data = val;
 			Head->Next = nullptr;
-			num--;
+			n--;
 		}
 		Node * tmp = Head;
 		while (tmp->Next) tmp = tmp->Next;
-		for (size_type i = 0; i < num; ++i)
+		for (size_type i = 0; i < n; ++i)
 		{
-			tmp->Next = new Node();
+			tmp->Next = new Node;
+			if (!tmp->Next) throw TMemoryLeaks("Memory leaks");
 			tmp->Next->Data = val;
 			tmp = tmp->Next;
 		}
-		Num += num;
+		Num += n;
 	};
 
 	void sort()
@@ -403,39 +413,38 @@ public:
 
 	class TIterator
 	{
-	public:
+	private:
 
 		Node * Uzel;
-		TForwardList * List;
 
+	public:
 
-		TIterator(TForwardList * l) : List(l)
+		TIterator()
 		{
 			Uzel = new Node;
-
+			if (!Uzel) throw TMemoryLeaks("Memory leaks");
 		}
 
-		TIterator(Node * uzel, TForwardList * l) : List(l), Uzel(uzel) { };
+		TIterator(Node * uzel) :  Uzel(uzel)
+		{ };
 
 		TIterator(const TIterator & obj)
 		{
 			Uzel = obj.Uzel;
-			List = obj.List;
 		}
+
 
 		TIterator & operator=(const TIterator & obj)
 		{
 			if (&obj == this) return *this;
 			if (Uzel) delete Uzel;
 			Uzel = obj.Uzel;
-			if (List) delete List;
-			List = obj.List;
 			return *this;
 		}
 
 		bool operator==(const TIterator & other) const
 		{
-			return ((Uzel == other.Uzel) && (List == other.List));
+			return (Uzel == other.Uzel);
 		};
 
 		bool operator!=(const TIterator & other) const
@@ -443,13 +452,13 @@ public:
 			return (Uzel != other.Uzel);
 		};
 
-		const_reference operator*() const
+		const value_type operator*() const
 		{
 			if (Uzel) return (Uzel->Data);
 			else throw std::exception("It's the end of list");
 		};
 
-		reference operator*()
+		value_type operator*()
 		{
 			if (Uzel) return (Uzel->Data);
 			else throw std::exception("It's the end of list");
@@ -463,8 +472,11 @@ public:
 			return *this;
 		};
 
-		
 
+		Node * node() const
+		{
+			return Uzel;
+		}
 	};
 	friend class TForwardList;
 
@@ -478,12 +490,12 @@ private:
 
 public:
 
-	TForwardList(const_iterator first, const_iterator last)
-	{
+	explicit TForwardList(const_iterator first, const_iterator last)
+	{ 
 		Head = nullptr;
 		Node * tmp = nullptr;
 		TIterator head(first);
-		while (head.Uzel != last.Uzel)
+		while (head != last)
 		{
 			if (!Head)
 			{
@@ -506,86 +518,85 @@ public:
 			}
 		}
 		reverse();
-	}
+	};
 
 
-	iterator insert_after(const_iterator pos, const value_type & value)
+	iterator insert_after(const_iterator pos, const_reference value)
 	{
-		if (pos == end()) push_back(value);
+		if (pos == end())
+		{
+			push_back(value);
+			Node * last = Head;
+			while (last != nullptr) last = last->Next;
+			return TIterator(last);
+		}
 		else
 		{
-			TIterator next (pos);
-			next++;
-			TIterator nodeNew(this);
-			*nodeNew = value;
-			pos.Uzel->Next = nodeNew.Uzel;
-			nodeNew.Uzel->Next = next.Uzel;
+			Node * position = pos.node();
+			Node * nodeNew = new Node;
+			if (!nodeNew) throw TMemoryLeaks("Memory leaks");
+			nodeNew->Data = value;
+			nodeNew->Next = position->Next->Next;
+			position->Next = nodeNew;
+			Num++;
+			return TIterator(nodeNew);
 		}
-		TIterator after(pos);
-		after++;  after++;
-		Num++;
-		return after;
+		
 	};
 
-	iterator erase_after(const_iterator position)
+	 iterator erase_after(const_iterator position)
 	{
-		TIterator tmp(position);
-		tmp++;   tmp++;
-		delete position.Uzel->Next;
-		position.Uzel->Next = tmp.Uzel;
-		Num--;
-		return tmp;
+		 if (position == end()) throw std::length_error("It's the end of the list");
+		 Node * next = position.node();
+		 next = next->Next->Next;
+		 Node * pos = position.node();
+		 delete pos->Next;
+		 pos->Next = next;
+		 return TIterator(next);
 	};
 
-	iterator erase_after(const_iterator start, const_iterator end)
+	 iterator erase_after(const_iterator position, const_iterator last)
 	{
-		TIterator st(start);
-		while (st.Uzel->Next != end.Uzel)
-		{
-			TIterator tmp(st);
-			tmp++; tmp++;
-			delete start.Uzel->Next;
-			start.Uzel->Next = tmp.Uzel;
-			st++;
-			Num--;
-		}
-		return end;
+		 Node * fir = position.node();
+		 Node * las = last.node();
+		 while (fir->Next != las)
+		 {
+			 Node * next = fir;
+			 next = next->Next->Next;
+			 delete fir->Next;
+			 fir->Next = next;
+			 fir = fir->Next;
+			 Num--;
+		 }
+		 return last;
 	};
 
 	iterator end()
 	{
 		if (!Head)  throw TEmptyList("This list is empty");
-		Node * tmp = Head;
-		while (tmp->Next) tmp = tmp->Next;
-		TIterator end(tmp, this);
-		return end;
+		return TIterator(nullptr);
 	};
 
 	iterator сend() const
 	{
 		if (!Head)  throw TEmptyList("This list is empty");
-		Node * tmp = Head;
-		while (tmp->Next) tmp = tmp->Next;
-		TIterator end(tmp, this);
-		return end;
+		return TIterator(nullptr);
 	};
 
 	iterator begin()
 	{
 		if (!Head)  throw TEmptyList("This list is empty");
-		TIterator head(Head, this);
-		return head;
+		return TIterator(Head);
 	};
 
 	iterator сbegin() const
 	{
 		if (!Head)  throw TEmptyList("This list is empty");
-		TIterator head(Head, this);
-		return head;
+		return TIterator(Head);
 	};
 
 	
-	bool operator==(const  TForwardList<value_type> & rhs) const
+	bool operator ==(const  TForwardList<value_type> & rhs) const
 	{
 		if (Num != rhs.Num) return false;
 		Node * headLhs = Head;
@@ -599,7 +610,7 @@ public:
 		return true;
 	};
 
-	bool operator<(const  TForwardList<value_type> & rhs) const
+	bool operator <(const  TForwardList<value_type> & rhs) const
 	{
 		if (Num > rhs.Num) return false;
 		Node * headLhs = Head;
