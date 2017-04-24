@@ -34,8 +34,13 @@ public:
 	{}
 
 	TArray(std::initializer_list<value_type> init)
-	{
-		std::copy(begin(), init.begin(), size() * sizeof(size_type));
+	{	
+		int i = 0;
+		for (auto & val : init)
+		{
+			Ptr[i] = val;
+			++i;
+		}	
 	}
 
 	value_type at(size_type index) const
