@@ -33,6 +33,12 @@ private:
 
 public:
 
+	explicit TForwardList()
+	{
+		Head = nullptr;
+		Num = 0;
+	}
+
 	explicit TForwardList(size_type num, const value_type &val = value_type())
 	{
 		if (num > max_size()) throw TUnknownValue("Number of elements is more than size_max");
@@ -369,6 +375,19 @@ public:
 		}
 	};
 
+	reference front()
+	{
+		if (!Head) throw TEmptyList("The list is empty");
+		return Head->Data;
+	};
+
+
+	const_reference front() const
+	{
+		if (!Head) throw TEmptyList("The list is empty");
+		return Head->Data;
+	};
+
 	void unique()
 	{
 		if (!Head) throw TEmptyList("This list is empty");
@@ -452,13 +471,13 @@ public:
 			return (Uzel != other.Uzel);
 		};
 
-		const value_type operator*() const
+		reference operator*() const
 		{
 			if (Uzel) return (Uzel->Data);
 			else throw std::exception("It's the end of list");
 		};
 
-		value_type operator*()
+		const_reference operator*()
 		{
 			if (Uzel) return (Uzel->Data);
 			else throw std::exception("It's the end of list");
@@ -471,6 +490,13 @@ public:
 			else throw std::exception("It's the end of list");
 			return *this;
 		};
+
+		const TIterator operator++(int)
+		{
+			TIterator result(*this);
+			++*this;
+			return result;
+		}
 
 
 		Node * node() const
