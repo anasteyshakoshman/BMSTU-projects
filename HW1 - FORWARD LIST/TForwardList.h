@@ -583,6 +583,7 @@ public:
 
 	 iterator erase_after(const_iterator position, const_iterator last)
 	{
+		 if (position == end()) throw std::length_error("It's the end of the list");
 		 Node * fir = position.node();
 		 Node * las = last.node();
 		 while (fir->Next != las)
