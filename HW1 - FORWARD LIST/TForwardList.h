@@ -44,7 +44,7 @@ public:
 		if (num > max_size()) throw TUnknownValue("Number of elements is more than size_max");
 		Head = nullptr;
 		Num = 0;
-		for (size_type i = 0; i < num; ++i)
+		while (Num != num)
 		{
 			this->push_back(val);
 		}
@@ -87,6 +87,7 @@ public:
 					Head = new Node;
 					if (!Head) throw TMemoryLeaks("Memory leaks!");
 					Head->Data = obj.Head->Data;
+					Head->Next = nullptr;
 					tmp1 = Head;
 					tmp2 = obj.Head->Next;
 				}
@@ -105,35 +106,34 @@ public:
 	TForwardList & operator =(const TForwardList<value_type> & obj)
 	{
 		if (&obj == this) return *this;
-		while (Head)
-		{
-			Node * tmp = Head->Next;
-			delete Head;
-			Head = tmp;
-		}
+		if(!this->empty()) this->clear();
 		Head = nullptr;
 		Num = obj.Num;
-		Node * tmp1 = nullptr;
-		Node * tmp2 = nullptr;
-		do
+		if (Num)
 		{
-			if (!Head)
+			Node * tmp1 = nullptr;
+			Node * tmp2 = nullptr;
+			do
 			{
-				Head = new Node;
-				if (!Head) throw TMemoryLeaks("Memory leaks");
-				Head->Data = obj.Head->Data;
-				tmp1 = Head;
-				tmp2 = obj.Head->Next;
-			}
-			else
-			{
-				tmp1->Next = new Node;
-				if (!tmp1->Next) throw TMemoryLeaks("Memory leaks");
-				tmp1 = tmp1->Next;
-				tmp1->Data = tmp2->Data;
-				tmp2 = tmp2->Next;
-			}
-		} while (tmp2);
+				if (!Head)
+				{
+					Head = new Node;
+					if (!Head) throw TMemoryLeaks("Memory leaks!");
+					Head->Data = obj.Head->Data;
+					Head->Next = nullptr;
+					tmp1 = Head;
+					tmp2 = obj.Head->Next;
+				}
+				else
+				{
+					tmp1->Next = new Node;
+					if (!tmp1->Next) throw TMemoryLeaks("Memory leaks!");
+					tmp1 = tmp1->Next;
+					tmp1->Data = tmp2->Data;
+					tmp2 = tmp2->Next;
+				}
+			} while (tmp2);
+		}
 	};
 
 	~TForwardList()
@@ -162,9 +162,7 @@ public:
 		return !Num;
 	};
 
-	
 
-	public:
 
 	void pop_back()
 	{
@@ -265,16 +263,7 @@ public:
 	{
 		if (num < 0) throw TUnknownValue("Uncorrect value of number");
 		if (num == Num) return;
-		if (!num)
-		{
-			while (Head)
-			{
-				Node * tmp = Head->Next;
-				delete Head;
-				Head = tmp;
-			}
-			Num = 0;
-		}
+		if (!num) this->clear();
 		if (Num > num)
 		{
 			Node * last = Head;
