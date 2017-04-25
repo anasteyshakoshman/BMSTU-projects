@@ -42,31 +42,24 @@ public:
 	explicit TForwardList(size_type num, const value_type &val = value_type())
 	{
 		if (num > max_size()) throw TUnknownValue("Number of elements is more than size_max");
-		Node * tmp = nullptr;
 		Head = nullptr;
-		Num = num;
-		for (size_type i = 0; i < Num; ++i)
+		Num = 0;
+		for (size_type i = 0; i < num; ++i)
 		{
-			if (!i)
-			{
-				Head = new Node();
-				if (!Head) throw TMemoryLeaks("Memory leaks");
-				Head->Data = val;
-				Head->Next = nullptr;
-			}
-			else
-			{
-				tmp = new Node();
-				if (!tmp) throw TMemoryLeaks("Memory leaks");
-				tmp->Data = val;
-				tmp->Next = Head;
-				Head = tmp;
-			}
+			this->push_back(val);
 		}
 	};  
 
 	
-
+	explicit TForwardList(std::initializer_list<value_type> init)
+	{
+		Head = nullptr;
+		Num = 0;
+		for (auto & i : init)
+		{
+			this->push_back(i);			
+		}
+	}
 
 	friend std::ostream & operator <<(std::ostream & out, TForwardList & obj)
 	{
@@ -168,6 +161,10 @@ public:
 	{
 		return !Num;
 	};
+
+	
+
+	public:
 
 	void pop_back()
 	{
