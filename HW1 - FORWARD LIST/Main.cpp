@@ -4,7 +4,7 @@
 int main()
 {
 	TForwardList<int> list1(1, 199);
-	std::cout << "List1(1, 199)\nlist 1 : " << list1 << std::endl;
+	std::cout << "List1(1, 199)\nlist 1 : " << list1  << std::endl;
 	list1.push_back(1);
 	std::cout << std::endl << "After push_back(1)\nlist 1 : " << list1 << std::endl;
 	list1.push_front(87);
@@ -60,7 +60,11 @@ int main()
 	std::cout << std::endl << "After erase_after(it, list2.end())\nlist 2 : " << list2 << std::endl;
 	TForwardList<int> list4(list2.begin(), list2.end());
 	std::cout << std::endl << "List4(list2.begin(), list2.end())\n" << list4 << std::endl;
-	std::cout << "first element of list2" << list2.front() << std::endl;
+	std::cout << std::endl << "first element of list2:\n" << list2.front() << std::endl;
+	TForwardList<char> list5 { 'H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D' };
+	TForwardList<char> list6;
+	list6 = list5;
+	std::cout << std::endl << "list6:\n" << list6 << std::endl;
 	system("pause");
 	
 	return 0;
