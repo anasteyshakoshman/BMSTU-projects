@@ -2,6 +2,8 @@
 #include <iostream>
 #include <initializer_list>
 #include "TException.h"
+#include <string>
+
 
 template <class Type>
 
@@ -20,10 +22,8 @@ public:
 	{
 		value_type Data;
 		Node * Next;
-		Node() : Data(0), Next(nullptr)
-		{};
+		
 	};
-	friend class TForwardList;
 
 private:
 
@@ -37,7 +37,9 @@ public:
 	{
 		Head = nullptr;
 		Num = 0;
-	}
+	};
+
+	
 
 	explicit TForwardList(size_type num, const value_type &val = value_type())
 	{
@@ -46,7 +48,7 @@ public:
 		Num = 0;
 		while (Num != num)
 		{
-			this->push_back(val);
+			push_back(val);
 		}
 	};  
 
@@ -57,94 +59,61 @@ public:
 		Num = 0;
 		for (auto & i : init)
 		{
-			this->push_back(i);			
+			push_back(i);			
 		}
-	}
+	};
 
-	friend std::ostream & operator <<(std::ostream & out, TForwardList & obj)
+
+
+	friend std::ostream & operator <<(std::ostream & out, TForwardList<value_type> & obj)
 	{
 		Node * tmp = obj.Head;
 		while (tmp)
 		{
-			out << tmp->Data << " ";
+			out << tmp->Data << "  ";
 			tmp = tmp->Next;
 		}
 		return out;
 	};
 
-	TForwardList(const TForwardList  <value_type> & obj)
+	
+
+	TForwardList(const TForwardList<value_type> & obj)
 	{
 		Head = nullptr;
-		Num = obj.Num;
-		if (Num)
+		if (obj.Num)
 		{
-			Node * tmp1 = nullptr;
-			Node * tmp2 = nullptr;
-			do
+			Node * tmp = obj.Head;
+			while (Num != obj.Num)
 			{
-				if (!Head)
-				{
-					Head = new Node;
-					if (!Head) throw TMemoryLeaks("Memory leaks!");
-					Head->Data = obj.Head->Data;
-					Head->Next = nullptr;
-					tmp1 = Head;
-					tmp2 = obj.Head->Next;
-				}
-				else
-				{
-					tmp1->Next = new Node;
-					if (!tmp1->Next) throw TMemoryLeaks("Memory leaks!");
-					tmp1 = tmp1->Next;
-					tmp1->Data = tmp2->Data;
-					tmp2 = tmp2->Next;
-				}
-			} while (tmp2);
+				push_back(tmp->Data);
+				tmp = tmp->Next;
+			}
 		}
+		else Num = 0;		
 	};
 
 	TForwardList & operator =(const TForwardList<value_type> & obj)
 	{
 		if (&obj == this) return *this;
-		if(!this->empty()) this->clear();
+		if (Num) clear();
 		Head = nullptr;
-		Num = obj.Num;
-		if (Num)
+		if (obj.Num)
 		{
-			Node * tmp1 = nullptr;
-			Node * tmp2 = nullptr;
-			do
+			Node * tmp = obj.Head;
+			while (Num != obj.Num)
 			{
-				if (!Head)
-				{
-					Head = new Node;
-					if (!Head) throw TMemoryLeaks("Memory leaks!");
-					Head->Data = obj.Head->Data;
-					Head->Next = nullptr;
-					tmp1 = Head;
-					tmp2 = obj.Head->Next;
-				}
-				else
-				{
-					tmp1->Next = new Node;
-					if (!tmp1->Next) throw TMemoryLeaks("Memory leaks!");
-					tmp1 = tmp1->Next;
-					tmp1->Data = tmp2->Data;
-					tmp2 = tmp2->Next;
-				}
-			} while (tmp2);
+				push_back(tmp->Data);
+				tmp = tmp->Next;
+			}
 		}
+		else Num = 0;
+		return *this;
 	};
 
 	~TForwardList()
 	{
-		while (Head)
-		{
-			Node * tmp = Head->Next;
-			delete Head;
-			Head = tmp;
-		}
-		Num = 0;
+		clear();
 	};
 
 	size_type size() const
@@ -175,8 +144,8 @@ public:
 			while (beforeLast->Next != last) beforeLast = beforeLast->Next;
 			beforeLast->Next = nullptr;
 		}
-		else Head = nullptr;
 		delete last;
+		if (Num == 1) Head = nullptr;
 		Num--;
 	};
 
@@ -185,20 +154,13 @@ public:
 		if (!Head) throw TEmptyList("This list is empty");
 		Node * tmp = Head->Next;
 		delete Head;
-		if (tmp) Head = tmp;
-		else Head = nullptr;
+		Head = tmp;
 		Num--;
 	};
 
 	void push_back(const value_type & val)
 	{
-		if (!Head)
-		{
-			Head = new Node;
-			if (!Head) throw TMemoryLeaks("Memory leaks");
-			Head->Data = val;
-			Head->Next = nullptr;
-		}
+		if (!Head) push_front(val);
 		else
 		{
 			Node * 	tmp = Head;
@@ -208,8 +170,9 @@ public:
 			newNode->Data = val;
 			tmp->Next = newNode;
 			newNode->Next = nullptr;
+			Num++;
 		}
-		Num++;
+		
 	};
 
 	void push_front(const value_type & val)
@@ -263,41 +226,15 @@ public:
 	{
 		if (num < 0) throw TUnknownValue("Uncorrect value of number");
 		if (num == Num) return;
-		if (!num) this->clear();
+		if (!num) clear();
 		if (Num > num)
 		{
-			Node * last = Head;
-			for (size_type i = 1; i < num; ++i) last = last->Next;
-			Node * del = last->Next;
-			while (del->Next)
-			{
-				Node * delNext = del->Next;
-				delete del;
-				del = delNext;
-			}
-			last->Next = nullptr;
+			while (Num != num) pop_back();
 		}
 		if (Num < num)
 		{
-			if (!Head)
-			{
-				Head = new Node;
-				Head->Data = val;
-				Head->Next = nullptr;
-			}
-			Node * tmp = Head;
-			while (tmp->Next) tmp = tmp->Next;
-			size_type i = 0;
-			if (tmp == Head) i = 1;
-			for (i; i < num - Num; ++i)
-			{
-				tmp->Next = new Node;
-				if (!tmp->Next) throw TMemoryLeaks("Memory leaks");
-				tmp->Next->Data = val;
-				tmp = tmp->Next;
-			}
+			while (Num != num) push_back(val);
 		}
-		Num = num;
 	};
 
 	void clear()
@@ -308,6 +245,7 @@ public:
 			delete Head;
 			Head = tmp;
 		}
+		Head = nullptr;
 		Num = 0;
 	};
 
@@ -321,24 +259,7 @@ public:
 	{
 		if (!n) return;
 		if ((Num + n) > max_size()) throw std::length_error("This number more than SIZE_MAX");
-		if (!Head)
-		{
-			Head = new Node;
-			if (!Head) throw TMemoryLeaks("Memory leaks");
-			Head->Data = val;
-			Head->Next = nullptr;
-			n--;
-		}
-		Node * tmp = Head;
-		while (tmp->Next) tmp = tmp->Next;
-		for (size_type i = 0; i < n; ++i)
-		{
-			tmp->Next = new Node;
-			if (!tmp->Next) throw TMemoryLeaks("Memory leaks");
-			tmp->Next->Data = val;
-			tmp = tmp->Next;
-		}
-		Num += n;
+		while (Num != n) push_back(val);
 	};
 
 	void sort()
@@ -366,7 +287,6 @@ public:
 		if (!Head) throw TEmptyList("The list is empty");
 		return Head->Data;
 	};
-
 
 	const_reference front() const
 	{
@@ -490,7 +410,6 @@ public:
 			return Uzel;
 		}
 	};
-	friend class TForwardList;
 
 
 private:
@@ -558,8 +477,11 @@ public:
 
 	 iterator erase_after(const_iterator position)
 	{
-		 if (position == end()) throw std::length_error("It's the end of the list");
-		 Node * next = position.node();
+		 if (position == end()) throw TUnknownValue("Can not erase invalide null element");
+		 Node * tmp = Head;
+		 while (tmp->Next) tmp = tmp->Next;
+		 if (position == TIterator(tmp)) throw std::length_error("It's the end of the list");
+ 		 Node * next = position.node();
 		 next = next->Next->Next;
 		 Node * pos = position.node();
 		 delete pos->Next;
@@ -570,6 +492,7 @@ public:
 	 iterator erase_after(const_iterator position, const_iterator last)
 	{
 		 if (position == end()) throw std::length_error("It's the end of the list");
+		 TIterator tmp(position);
 		 Node * fir = position.node();
 		 Node * las = last.node();
 		 while (fir->Next != las)
