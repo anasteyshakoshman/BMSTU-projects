@@ -26,27 +26,6 @@ private:
 public:
 
 	
-	static boolean_function var(size_t n, size_t dimension)
-	{
-		std::vector<bool> Xn;
-		while (Xn.size() < pow(2, dimension))
-		{
-			size_type i = 0;
-			while (i < pow(2, n))
-			{
-				Xn.push_back(false);
-				++i;
-			}
-			i = 0;
-			while (i < pow(2, n))
-			{
-				Xn.push_back(true);
-				++i;
-			}
-		}
-		return boolean_function(Xn);
-	}
-
 	static boolean_function zero(size_t dimension)
 	{
 		if (!dimension) throw std::logic_error("Uncorrect quantity of elements");
@@ -58,6 +37,25 @@ public:
 			++i;
 		}
 		return boolean_function(func);
+	};
+
+	static boolean_function var(size_t n, size_t dimension)   //dimension - кол-во переменных, n - номер переменной, значения которой буду возвращены
+	{
+		if (dimension < n) throw std::logic_error("The number of nedeed element can not more than the quantity of alll elements");
+		size_type tmp = dimension - n;
+		std::vector<value_type> Xn;
+		size_type i = 0;
+		while (i < pow(2, dimension) / pow(2, tmp))
+		{
+			size_type j = 0;
+			while (j < pow(2, tmp))
+			{
+				Xn.push_back(i % 2);
+				++j;
+			}
+			++i;
+		}
+		return boolean_function(Xn);
 	};
 
 	static boolean_function one(size_t dimension)
@@ -354,7 +352,7 @@ public:
 	
 
 
-	boolean_function operator()(const std::vector<boolean_function>& fs) const
+	/*boolean_function operator()(const std::vector<boolean_function>& fs) const
 	{
 
 	};
@@ -362,7 +360,7 @@ public:
 	boolean_function operator()(const std::initializer_list<boolean_function> vars) const
 	{
 
-	};
+	};*/
 
 	bool is_monotone() const
 	{
