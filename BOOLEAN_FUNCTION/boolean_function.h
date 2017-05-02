@@ -39,10 +39,10 @@ public:
 		return boolean_function(func);
 	};
 
-	static boolean_function var(size_t n, size_t dimension)   //dimension - кол-во переменных, n - номер переменной, значения которой буду возвращены
-	{
-		if (dimension < n) throw std::logic_error("The number of nedeed element can not more than the quantity of alll elements");
-		size_type tmp = dimension - n;
+	static boolean_function var(size_t n, size_t dimension)   //dimension - кол-во переменных
+	{				//n - номер переменной, вектор значений которой будет возвращен(n = 0, 1, ..., dimension - 1 )
+		if (dimension <= n) throw std::logic_error("The number of nedeed element can not more than the quantity of alll elements");
+		size_type tmp = dimension - 1 - n;
 		std::vector<value_type> Xn;
 		size_type i = 0;
 		while (i < pow(2, dimension) / pow(2, tmp))
@@ -187,7 +187,7 @@ public:
 	};
 
 
-	boolean_function& operator += (const boolean_function& rhs)
+	boolean_function& operator +=(const boolean_function& rhs)
 	{
 		if (Func.size() != rhs.Func.size()) throw std::length_error("Different quantity of elements");
 		size_type i = 0;
@@ -240,28 +240,31 @@ public:
 
 	bool operator ==(const boolean_function& rhs) const
 	{
-		size_t num;
-		if (size() > rhs.size()) num = rhs.size();
-		else num = size();
-		size_type i = 0;
-		while (i < num)
+		std::vector<value_type> tmp1 = anf();
+		std::vector<value_type> tmp2 = rhs.anf();
+		if (tmp1.size() > tmp2.size())
 		{
-			if (Func[i] != rhs.Func[i]) return false;
-			++i;
+			tmp2.resize(tmp1.size(), false);
 		}
-		return true;
+		else
+		{
+			tmp1.resize(tmp2.size(), false);
+		}
+		if (tmp1 == tmp2) return true;
+		else return false;
 	};
 
 
 	bool operator >= (const boolean_function& rhs) const
 	{
 		if (Func.size() != rhs.Func.size()) throw std::length_error("Different quantity of elements");
+		if (!Func.size()) throw std::logic_error("These boolean functions are empty");
 		if (this == &rhs) return true;
 		bool right = true, left = true;
 		size_type i = 0;
 		while (i < Func.size())
 		{
-			if (Func.at(i)< rhs.Func.at(i)) left = false;
+			if (Func.at(i) < rhs.Func.at(i)) left = false;
 			if (Func.at(i) > rhs.Func.at(i)) right = false;
 			++i;
 		}
@@ -325,27 +328,28 @@ public:
 	bool operator()(const std::vector<bool>& vars) const
 	{
 		if (vars.size() != dimension()) throw std::length_error("The length of vars aren't equally");
-		size_type n = dimension(), val = 0;
-		for (auto it = vars.begin(); it != vars.end(); ++it)
+		size_type n = dimension(), result = 0;
+		auto i = vars.begin();
+		while (i != vars.end())
 		{
-			val += (*it)*pow(2, n);
-			n--;
+			result += (*i) * pow( 2 , n );
+			++i;  --n;
 		}
-		return Func[val];
+		return Func[result];
 	};
 
 
 	bool operator()(const std::initializer_list<bool>  vars) const
 	{
 		if (vars.size() != dimension()) throw std::length_error("The length of vars aren't equally");
-		size_type Num = dimension() - 1, val = 0;
-		for (auto it = vars.begin(); it != vars.end(); ++it) 
+		size_type n = dimension() - 1, result = 0;
+		auto i = vars.begin();
+		while (i != vars.end())
 		{
-			val += (*it)*pow(2, Num);
-			Num--;
+			result += (*i) * pow( 2 , n );
+			++i;  --n;
 		}
-		return Func[val];
-
+		return Func[result];
 	};
 
 
@@ -397,13 +401,11 @@ public:
 
 	bool is_linear() const
 	{
-		size_type i = 0;
-		while (i < Func.size())
+		std::vector<value_type> tmp = anf();
+		size_type i = dimension() + 1;
+		while (i < tmp.size())
 		{
-			if (Func[i])
-			{
-				if (i != pow(2, i)) return false;
-			}
+			if (tmp[i] == true) return false;
 			++i;
 		}
 		return true;
@@ -482,16 +484,17 @@ public:
 };
 
 
- //пусть boolean_function представляет из себя функцию "01110000"
- //тогда get_polynom вернет строку "x0 + x1 + x0x1 + x0x2 + x1x2 + x0x1x2"
-
-
 std::string get_polynom(const boolean_function& obj)
 {
 	std::string polynom;
 	std::vector<bool> anf = obj.anf();
-	if (anf[0] == 1) polynom += "1 + ";
-	size_t i = 0, quan = 0;
+	size_t quan = 0;    //для расстaновки " + " и " * "
+	if (anf[0] == 1)
+	{
+		polynom += "1 ";
+		++quan;
+	}
+	size_t i = 0;
 	while (i < obj.size())
 	{
 		if (anf[i])
