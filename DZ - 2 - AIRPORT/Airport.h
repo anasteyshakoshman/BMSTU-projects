@@ -1,5 +1,8 @@
 #pragma once
-#include "Include.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <exception>
 #include "Flight.h"
 
 class Airport
