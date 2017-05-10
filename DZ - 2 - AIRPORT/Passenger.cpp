@@ -9,6 +9,7 @@ Passenger::Passenger(const std::string & fio, const Flight & voyage)
 	++Num;
 };
 
+
 Passenger::Passenger(const std::string & fio, const Flight & voyage, const int age, bool bigBaggage, bool pet)
 {
 	if (age < 0 || age > 150) throw std::length_error("Uncorrect value of passenger's age");
@@ -34,8 +35,9 @@ std::ostream & operator <<(std::ostream & out, const  Passenger & obj)
 {
 	out << "PASSENGER\n";
 	out << "FIO : " << obj.FIO << "\n";
-	out << "Age : " << obj.Age << "\n";
-	out << "Flight : " << obj.Voyage << "\n";
+	if(obj.Age) out << "Age : " << obj.Age << "\n";
+	out << "Flight : from " << obj.Voyage.GetDeparture().GetName() << " (" << obj.Voyage.GetDeparture().GetLocation() << ") ";
+	out << " to " << obj.Voyage.GetDestination().GetName() << " (" << obj.Voyage.GetDestination().GetLocation() << ") " << "\n";
 	if (obj.BigBaggage) out << "Have big baggage\n";
 	else  out << "Have NOT big baggage\n";
 	if (obj.Pet) out << "Have pet\n";
