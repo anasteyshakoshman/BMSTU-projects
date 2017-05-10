@@ -1,7 +1,6 @@
 #pragma once
 #include "Include.h"
 
-
 class Flight;
 
 class Airport
