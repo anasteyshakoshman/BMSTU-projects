@@ -2,12 +2,14 @@
 #include "Include.h"
 #include "Airport.h"
 
+class Passenger;
+
 class Flight
 {
-private:
-
 	Airport Departure;      
-	Airport Destination;    
+	Airport Destination; 
+	std::vector<Passenger> People;
+
 	static size_t Num;
 
 public:
@@ -30,7 +32,10 @@ public:
 
 	Airport  GetDeparture() const;
 
+	void SetPassenger(const Passenger & human);
+
 	Airport  GetDestination() const;
+
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj);
