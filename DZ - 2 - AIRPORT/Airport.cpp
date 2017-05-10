@@ -1,18 +1,11 @@
 #include "Airport.h"
 #include "Flight.h"
 
+
 size_t Airport::Num = 0;
 
-Airport::Airport() {};
-
-Airport::Airport(const std::string & name, const std::string & location)
-{
-	Name = name;
-	Location = location;
-	NumPlans = 0;  //так как вызывая этот конструктор, имеется ввиду, что еще будут добавлены рейсы, а следовательно увеличено число самолетов
-	++Num;
-};
-
+Airport::Airport()
+{};
 
 
 Airport::Airport(const std::string & name, const std::string & location, const int & numplans)
@@ -21,8 +14,10 @@ Airport::Airport(const std::string & name, const std::string & location, const i
 	Name = name;
 	Location = location;
 	NumPlans = numplans;
+	FreePlans = numplans;
 	++Num;
 };
+
 
 size_t Airport::GetNum()
 {
@@ -35,7 +30,6 @@ Airport::Airport(const Airport & other)
 	NumPlans = other.NumPlans;
 	Location = other.Location;
 	Flights = other.Flights;
-	++Num;
 };
 
 Airport & Airport::operator =(const Airport & other)
@@ -51,24 +45,29 @@ Airport & Airport::operator =(const Airport & other)
 std::ostream & operator <<(std::ostream & out, const  Airport & obj)
 {
 	out << "AIRPORT\n";
-	out << "Name of airport : " << obj.Name << "\n";
+	out << "Name : " << obj.Name << "\n";
 	out << "Location : " << obj.Location << "\n";
 	size_t i = 1;
-	if (!obj.Flights.empty())
+	out << "Quntity of flights : " << obj.Flights.size() << "\n";
+	for (auto it = obj.Flights.begin(); it != obj.Flights.end(); ++it)
 	{
-		for (auto it = obj.Flights.begin(); it != obj.Flights.end(); ++it)
-		{
-			out << "Flight " << i << " : from " << it->GetDeparture().GetName() << " ( " << it->GetDeparture().GetLocation() << ")  to " << it->GetDestination().GetName() << " ( " << it->GetDestination().GetLocation() << ")\n";
-			++i;
-		}
+		out << i << ") from " << it->GetDeparture().GetName() << " ( " << it->GetDeparture().GetLocation() << ")";
+		out << " to " << it->GetDestination().GetName() << " ( " << it->GetDestination().GetLocation() << ")\n";
+		++i;
 	}	
-	if (obj.NumPlans) out << "Quantity of plans : " << obj.NumPlans << "\n";
+	out << "Quantity of all plans : " << obj.NumPlans << "\n";
+	out << "Quantity of free plans : " << obj.FreePlans << "\n";
 	return out;
 };
 
 void Airport::SetFlight(const Flight & flight)
 {
-	Flights.push_back(flight);
+	if (NumPlans - Flights.size() >= 1)
+	{
+		Flights.push_back(flight);
+		--FreePlans;
+	}
+	else throw std::length_error("This airport heven't more plans");
 };
 
 bool Airport::operator ==(const Airport & other)
@@ -86,9 +85,6 @@ std::string Airport::GetName() const
 	return Name;
 };
 
-void Airport::PlusNumPlans()
-{
-	++NumPlans;
-};
+
 
 
