@@ -6,6 +6,7 @@
 class Passenger
 {
 private:
+
 	int Age;
 	std::string FIO;
 	bool BigBaggage;
@@ -14,7 +15,6 @@ private:
 	static size_t Num;
 
 public:
-
 
 	Passenger(const std::string & fio, const Flight & voyage);
 
