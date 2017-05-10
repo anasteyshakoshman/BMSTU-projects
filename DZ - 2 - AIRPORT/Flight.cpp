@@ -1,4 +1,6 @@
 #include "Flight.h"
+#include "Include.h"
+
 
 size_t Flight::Num = 0;
 
@@ -9,8 +11,6 @@ Flight::Flight(Airport & departure, Airport &  destination)
 	Destination = destination;
 	destination.SetFlight(*this);
 	departure.SetFlight(*this);
-	destination.PlusNumPlans();
-	departure.PlusNumPlans();
 	++Num;
 };
 
@@ -25,10 +25,16 @@ Flight::Flight(std::initializer_list<Airport> & airport)    //{departure, destin
 };
 
 
+//Flight::~Flight()
+//{
+//	Departure.Delete();
+//	Destination.Delete();
+//	--Num;
+//};
+
+
 Flight::Flight()
-{
-	++Num;
-};
+{};
 
 size_t Flight::GetNum()
 {
@@ -59,7 +65,6 @@ Flight::Flight(const Flight & other)
 {
 	Departure = other.Departure;
 	Destination = other.Destination;
-	++Num;
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj)
