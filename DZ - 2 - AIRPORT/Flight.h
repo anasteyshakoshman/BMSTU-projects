@@ -1,18 +1,13 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-#include <exception>
-
+#include "Include.h"
 #include "Airport.h"
-
 
 class Flight
 {
 private:
 
-	Airport Departure;      //пункт вылета
-	Airport Destination;    //пункт назначения
+	Airport Departure;      
+	Airport Destination;    
 	static size_t Num;
 
 public:
@@ -36,7 +31,6 @@ public:
 	Airport  GetDeparture() const;
 
 	Airport  GetDestination() const;
-
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj);
