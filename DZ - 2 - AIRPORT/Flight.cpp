@@ -25,14 +25,6 @@ Flight::Flight(std::initializer_list<Airport> & airport)    //{departure, destin
 };
 
 
-//Flight::~Flight()
-//{
-//	Departure.Delete();
-//	Destination.Delete();
-//	--Num;
-//};
-
-
 Flight::Flight()
 {};
 
