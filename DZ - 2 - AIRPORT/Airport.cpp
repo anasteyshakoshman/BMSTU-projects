@@ -1,5 +1,6 @@
 #include "Airport.h"
 #include "Flight.h"
+#include "Passenger.h"
 
 
 size_t Airport::Num = 0;
@@ -28,6 +29,7 @@ Airport::Airport(const Airport & other)
 {
 	Name = other.Name;
 	NumPlans = other.NumPlans;
+	FreePlans = other.FreePlans;
 	Location = other.Location;
 	Flights = other.Flights;
 };
@@ -37,6 +39,7 @@ Airport & Airport::operator =(const Airport & other)
 	if (&other == this) return *this;
 	Name = other.Name;
 	NumPlans = other.NumPlans;
+	FreePlans = other.FreePlans;
 	Location = other.Location;
 	Flights = other.Flights;
 	return *this;
@@ -44,19 +47,19 @@ Airport & Airport::operator =(const Airport & other)
 
 std::ostream & operator <<(std::ostream & out, const  Airport & obj)
 {
-	out << "AIRPORT\n";
-	out << "Name : " << obj.Name << "\n";
-	out << "Location : " << obj.Location << "\n";
+	out << "AIRPORT" << n;
+	out << "Name : " << obj.Name << n;
+	out << "Location : " << obj.Location << n;
 	size_t i = 1;
-	out << "Quntity of flights : " << obj.Flights.size() << "\n";
+	out << "All flights : " << obj.Flights.size() << n;
 	for (auto it = obj.Flights.begin(); it != obj.Flights.end(); ++it)
 	{
 		out << i << ") from " << it->GetDeparture().GetName() << " ( " << it->GetDeparture().GetLocation() << ")";
-		out << " to " << it->GetDestination().GetName() << " ( " << it->GetDestination().GetLocation() << ")\n";
+		out << " to " << it->GetDestination().GetName() << " ( " << it->GetDestination().GetLocation() << ")" << n;
 		++i;
 	}	
-	out << "Quantity of all plans : " << obj.NumPlans << "\n";
-	out << "Quantity of free plans : " << obj.FreePlans << "\n";
+	out << "All plans : " << obj.NumPlans << n;
+	out << "Free plans : " << obj.FreePlans << n;
 	return out;
 };
 
