@@ -94,3 +94,16 @@ bool Flight::operator ==(const Flight & other)
 {
 	return(Departure == other.Departure && Destination == other.Destination);
 };
+
+void Flight::Clear()
+{
+	Departure.Clear();
+	Destination.Clear();
+	Name.erase();
+	People.clear();
+};
+
+Flight::~Flight()
+{
+	Clear();
+};
