@@ -50,6 +50,10 @@ public:
 	void SetStewardess(const Stewardess & stewardess);
 
 	bool GetSizeBPlans() const;
+
+	void Clear();
+
+	~Airport();
 };
 
 std::ostream & operator <<(std::ostream & out, const  Airport & obj);
