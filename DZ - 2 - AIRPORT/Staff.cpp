@@ -28,6 +28,18 @@ size_t Staff::GetNum()
 	return Num;
 };
 
+void Staff::Clear()
+{
+	AirPort.Clear();
+	Experience = 0;
+	Pay = 0;
+}
+
+Staff::~Staff()
+{
+	Clear();
+};
+
 
 
 Pilot::Pilot()
@@ -85,6 +97,13 @@ bool Pilot::GetParam() const
 {
 	return HighQualification && LargePlan;
 };
+
+Pilot::~Pilot()
+{
+	Clear();
+	HighQualification = false;
+	LargePlan = false;
+}
 
 std::ostream & operator <<(std::ostream & out, const Pilot & obj)
 {
@@ -218,5 +237,16 @@ size_t Stewardess::GetNum()
 	return Num;
 };
 
+
+Stewardess::~Stewardess()
+{
+	Clear();
+	Russian = false;
+	German = false;
+	Chinese = false;
+	English = false;
+	French = false;
+	More5Language = false;
+}
 
 
