@@ -6,6 +6,8 @@
 #include <initializer_list>
 #include <math.h>
 #include <sstream>
+#include <algorithm>
+
 
 class boolean_function
 {
@@ -29,26 +31,19 @@ public:
 	static boolean_function zero(size_t dimension)
 	{
 		if (!dimension) throw std::logic_error("Uncorrect quantity of elements");
-		std::vector<bool> func;
-		size_type i = 0;
-		while (i < pow(2, dimension))
-		{
-			func.push_back(false);
-			++i;
-		}
+		std::vector<bool> func(pow(2, dimension), false);
 		return boolean_function(func);
 	};
 
-	static boolean_function var(size_t n, size_t dimension)   //dimension - кол-во переменных
-	{				//n - номер переменной, вектор значений которой будет возвращен(n = 0, 1, ..., dimension - 1 )
-		if (dimension <= n) throw std::logic_error("The number of nedeed element can not more than the quantity of alll elements");
-		size_type tmp = dimension - 1 - n;
+	static boolean_function var(size_t n, size_t dimension)   
+	{
+		if (dimension <= n) throw std::logic_error("The number of nedeed element can not more than the quantity of all elements");
 		std::vector<value_type> Xn;
 		size_type i = 0;
-		while (i < pow(2, dimension) / pow(2, tmp))
+		while (i < pow(2, dimension) / pow(2, n))
 		{
 			size_type j = 0;
-			while (j < pow(2, tmp))
+			while (j < pow(2, n))
 			{
 				Xn.push_back(i % 2);
 				++j;
@@ -61,13 +56,7 @@ public:
 	static boolean_function one(size_t dimension)
 	{
 		if (!dimension) throw std::logic_error("Uncorrect quantity of elements");
-		std::vector<bool> func;
-		size_type i = 0;
-		while (i < pow(2, dimension))
-		{
-			func.push_back(true);
-			++i;
-		}
+		std::vector<bool> func(pow(2, dimension), true);
 		return boolean_function(func);
 	};
 
@@ -120,10 +109,10 @@ public:
 		{
 			ost = value % 2;
 			value = value / 2;
-			Func.insert(Func.begin(), ost);
+			Func.push_back(ost);
 		}
 		if (Func.size() > pow(2, n)) throw std::logic_error("The length of a given value in the binary system is more than the length of function of a given quantity of vars");
-		while (Func.size() != pow(2, n))   Func.insert(Func.begin(), false);
+		while (Func.size() != pow(2, n))   Func.push_back(false);
 	};
 
 	friend std::ostream & operator <<(std::ostream & out, boolean_function & obj)
@@ -238,7 +227,7 @@ public:
 	};
 
 
-	bool operator ==(const boolean_function& rhs) const
+	bool operator ==(const boolean_function & rhs) const
 	{
 		std::vector<value_type> tmp1 = anf();
 		std::vector<value_type> tmp2 = rhs.anf();
@@ -353,18 +342,71 @@ public:
 	};
 
 
-	
-
-
-	/*boolean_function operator()(const std::vector<boolean_function>& fs) const
+	boolean_function operator()(const std::vector<boolean_function>& fs) const
 	{
-
-	};
+		std::vector<boolean_function> bf;
+		std::vector<value_type> vec;
+		size_t tmp = 0, i = 0;
+		while (i < fs.size())
+		{
+			if (fs[i].size() > tmp)
+			{
+				tmp = fs[i].size();
+			}
+			bf.push_back(fs[i]);
+			++i;
+		}
+		int ** array = new int*[tmp];
+		i = 0;
+		while (i < tmp)
+		{
+			array[i] = new int[fs.size()];
+			++i;
+		}
+		i = 0;
+		while (i < bf.size())
+		{
+			size_t m = 0;
+			while (m < fs.size())
+			{
+				size_t k = 0, j = 0;
+				while (j < tmp)
+				{
+					if (k >= bf[i].size()) k = 0;
+					array[j][m] = bf[i][k];
+					++k; ++j;
+				}
+				++i;  ++m;
+			}
+		}
+		i = 0;
+		while (i < tmp)
+		{
+			size_t l = 0, st = 0;
+			int j = fs.size() - 1;
+			while (j > -1)
+			{
+				l += pow(2, st) * array[i][j];
+				++st; --j;
+			}
+			vec.push_back(Func[l]);
+			++i;
+		}
+		i = 0;
+		while (i < tmp)
+		{
+			delete[] array[i];
+			++i;
+		}
+		delete[] array;
+		return boolean_function(vec);
+	}
 
 	boolean_function operator()(const std::initializer_list<boolean_function> vars) const
 	{
-
-	};*/
+		std::vector<boolean_function> fs = vars;
+		return (*this)(fs);
+	}
 
 	bool is_monotone() const
 	{
@@ -402,7 +444,7 @@ public:
 	bool is_linear() const
 	{
 		std::vector<value_type> tmp = anf();
-		size_type i = dimension() + 1;
+		size_type i = 1 + dimension();
 		while (i < tmp.size())
 		{
 			if (tmp[i] == true) return false;
@@ -484,44 +526,43 @@ public:
 };
 
 
-std::string get_polynom(const boolean_function& obj)
+std::string get_polynom(const boolean_function & obj)
 {
-	std::string polynom;
 	std::vector<bool> anf = obj.anf();
-	size_t quan = 0;    //для расстaновки " + " и " * "
-	if (anf[0] == 1)
+	std::string polynom;
+	size_t plus = 0;    
+	if (anf[0])
 	{
 		polynom += "1 ";
-		++quan;
+		++plus;
 	}
 	size_t i = 0;
-	while (i < obj.size())
+	while (i < anf.size())
 	{
 		if (anf[i])
 		{
-			if(quan) polynom += " + ";
-			size_t tmp = i, n = 0;
-			quan = 0;
+			if (plus) polynom += " + ";
+			size_t tmp = i, n = 1;
+			plus = 0;
 			while (tmp > 0)
 			{
 				if (tmp % 2 == 1)
 				{
 					polynom += "X";
-					std::ostringstream ost;
-					ost << n;
-					std::string s_num = ost.str();
-					polynom += s_num;
-					quan++;
+					std::stringstream num;
+					num << n;
+					polynom += num.str() + " ";
+					++plus;
 				}
 				tmp /= 2;
-				n++;
-				if (tmp > 0 && anf[i] && tmp % 2 == 1 && quan != 0) polynom += " * ";
+				++n;
 			}
 		}
 		++i;
 	}
 	return polynom;
-}
+};
+	
 
 boolean_function operator + (const boolean_function& a, const boolean_function& b)
 {
