@@ -18,10 +18,37 @@ void GetNum()
 	std::cout << "All stewardesses: " << Stewardess::GetNum() << std::endl;
 }
 
+void SPlan(Airport & airport)     //фунукция для создания маленького самолета с персоналом
+{
+	SmallPlan Q(airport, true);
+	Pilot Y(airport, 6, 180, false, false);
+	Stewardess I(airport, 4, 100, true, false, true, false, true);
+	Stewardess P(airport, 2, 95, false, false, true, true, true);
+	Stewardess K(airport, 3, 110, true, true, true, true, false);
+}
+
+void BPlan(Airport & airport)  //фунукция для создания большого самолета с персоналом
+{
+	BigPlan Q(airport);
+	Pilot Y(airport, 10, 200, true, true);
+	Pilot U(airport, 15, 250, true, true);
+	Stewardess K(airport, 8, 130, true);
+	Stewardess I(airport, 6, 120, true);
+	Stewardess P(airport, 7, 125, true);
+	Stewardess E(airport, 10, 150, true);
+	Stewardess M(airport, 8, 140, true);
+}
+
 void Sheme(string nameA, string cityA, string nameB, string cityB, string fio)
 {
 	Airport A(nameA, cityA);
 	Airport B(nameB, cityB);
+
+	BPlan(A);
+	BPlan(B);
+	SPlan(A);
+	SPlan(B);
+
 	Flight AB(A, B);
 	Flight BA(B, A);
 	Passenger C(fio, AB);
@@ -34,107 +61,67 @@ void Work2()
 	Airport Tor("Tor", "Minsk");
 	Airport Rop("Rop", "Ottava");
 
-	BigPlan W(Tor);
-	SmallPlan M(Rop, true);
-	BigPlan I(Rop);
-	SmallPlan K(Tor, false);
-
-	for (int i = 0; i < 2; ++i)
-	{
-		Pilot(Tor, 6, 250, true, true);
-		Pilot(Rop, 6, 250, true, true);
-	}
-
-	Pilot(Tor, 3, 150, false, false);
-	Pilot(Rop, 3, 150, false, false);
-
-	
-	for (int i = 0; i < 5; ++i)
-	{
-		Tor.SetStewardess(Stewardess(Tor, 6, 250, true));
-		Rop.SetStewardess(Stewardess(Tor, 6, 250, true));
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		Tor.SetStewardess(Stewardess(Tor, 3, 150, false));
-		Rop.SetStewardess(Stewardess(Rop, 3, 150, false));
-	}
-
+	BPlan(Tor);
+	BPlan(Rop);
+	SPlan(Tor);
+	SPlan(Rop);
 
 	Flight MiOt(Tor, Rop);
+	Flight OtMi(Rop, Tor);
 
 	Passenger Po("Po", MiOt);
 	Passenger Kim("Kim", MiOt);
+
+
+
+	std::cout << MiOt << n << OtMi << n;
 
 	std::cout << Tor << n << Rop << n;
 }
 
 void Work()
 {
-	Airport Domodevsky("Domodedovsky", "Moscow");
+	Airport Domodevsky("Domodedovsky", "Moscow");   //создаем аэропорта
 	Airport JohnKennedy("JohnKennedy", "NewYork");
 	Airport  BerlinTegel("BerlinTegel", "Berlin");
 	Airport  Shoudu("Shoudu", "Beijing");
 
-	BigPlan R(Domodevsky);
-	SmallPlan I(JohnKennedy, true);
+	
+	BigPlan R(Domodevsky);  //добавляем самолеты
 	BigPlan U(BerlinTegel);
-	SmallPlan Y(Shoudu, false);
-
-	for (int i = 0; i < 2; ++i)
-	{
-		Pilot(Domodevsky, 7, 250, true, true);
-		if(i < 1) Pilot(JohnKennedy, 7, 250, true, true);
-		Pilot(BerlinTegel, 7, 250, true, true);
-		if(!i)Pilot(Shoudu, 7, 250, true, true);
-	}
-	for (int i = 0; i < 5; ++i)
-	{
-		Domodevsky.SetStewardess(Stewardess(Domodevsky, 7, 8, true));
-		if (i < 3) JohnKennedy.SetStewardess(Stewardess(JohnKennedy, 7, 8, true));
-		BerlinTegel.SetStewardess(Stewardess(BerlinTegel, 7, 8, true));
-		if (i < 3) Shoudu.SetStewardess(Stewardess(Shoudu, 7, 8, true));
-	}
-
-	BigPlan O(Domodevsky);
-	SmallPlan P(JohnKennedy, true);
-	BigPlan L(BerlinTegel);
-	SmallPlan Z(Shoudu, false);
-
-	for (int i = 0; i < 2; ++i)
-	{
-		Pilot(Domodevsky, 7, 250, true, true);
-		if (!i) Pilot(JohnKennedy, 7, 250, true, true);
-		Pilot(BerlinTegel, 7, 250, true, true);
-		if (!i)Pilot(Shoudu, 7, 250, true, true);
-	}
-	for (int i = 0; i < 5; ++i)
-	{
-		Domodevsky.SetStewardess(Stewardess(Domodevsky, 7, 8, true));
-		if (i < 3) JohnKennedy.SetStewardess(Stewardess(Domodevsky, 7, 8, true));
-		BerlinTegel.SetStewardess(Stewardess(BerlinTegel, 7, 8, true));
-		if (i < 3) Shoudu.SetStewardess(Stewardess(Shoudu, 7, 8, true));
-	}
-
 	BigPlan B(Domodevsky);
 	BigPlan C(BerlinTegel);
+	BigPlan O(Domodevsky);
+	BigPlan L(BerlinTegel);
 
-	for (int i = 0; i < 2; ++i)
-	{
-		Pilot(Domodevsky, 7, 250, true, true);
-		Pilot(BerlinTegel, 7, 250, true, true);
-	}
-	for (int i = 0; i < 5; ++i)
-	{
-		Domodevsky.SetStewardess(Stewardess(Domodevsky, 7, 8, true));
-		BerlinTegel.SetStewardess(Stewardess(BerlinTegel, 7, 8, true));
-	}
-	
+	SmallPlan Z(Shoudu, false);
+	SmallPlan P(JohnKennedy, true);
+	SmallPlan Y(Shoudu, false);
+	SmallPlan I(JohnKennedy, true);
 
-	std::vector<Flight> flights = 
+	for (int i = 0; i < 15; ++i)  //добавляем персонал
+	{
+		Stewardess(Domodevsky, 7, 8, true);
+		Stewardess(BerlinTegel, 7, 8, true);
+		if (i < 6)
+		{
+			Pilot(Domodevsky, 7, 250, true, true);
+			Pilot(BerlinTegel, 7, 250, true, true);
+			if (i < 2)
+			{
+				Pilot(JohnKennedy, 7, 250, true, true);
+				Pilot(Shoudu, 7, 250, true, true);
+			}
+			Stewardess(JohnKennedy, 7, 8, true);
+			Stewardess(Shoudu, 7, 8, true);
+		}		
+	}
+
+	std::vector<Flight> flights =     //создаем рейсы между аэропортами
 	{ { Domodevsky, BerlinTegel }, { JohnKennedy, BerlinTegel }, { Domodevsky, JohnKennedy }, { Shoudu, Domodevsky }, { BerlinTegel, Shoudu } };
-	Passenger John("John", flights[0]);
+
+
+	Passenger John("John", flights[0]);     //добалвяем пассжиров
 	Passenger Kit("Kit", flights[1]);
 	Passenger Lily("Lily", flights[2]);
 	Passenger Stasiy("Stasiy", flights[2]);
@@ -148,7 +135,7 @@ void Work()
 	{
 		std::cout << *it << n;
 	}
-	std::cout << John << n << Kit << n << Stasiy << n << Daniel  << Rick << n << Lily << n;
+	std::cout << John << n << Kit << n << Stasiy << n << Daniel << Rick << n << Lily << n << Yoko << n;
 };
 
 void People()
@@ -168,10 +155,11 @@ void People()
 }
 
 
+
 void main()
 {
 	Work2();
-	GetNum();
-	
+	People();
+	GetNum();	
 	system("pause");
 };
