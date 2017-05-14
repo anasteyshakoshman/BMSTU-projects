@@ -4,17 +4,23 @@
 
 class Staff
 {
+protected:
 	Airport AirPort;
 	int Experience;   //стаж работы
 	static size_t Num;
-	int Pay;
+	int Pay;   //в долларах
 
 public:
 
-	Staff(const Airport & airPort, const int experience, int pay);
+	Staff();
 
-	static size_t GetNumStaff();
-	
+	Staff(Airport & airPort);
+
+	Staff(Airport & airPort, const int experience, int pay);
+
+	size_t GetNum();
+
+	std::string GetName() const;
 };
 
 
@@ -26,12 +32,28 @@ class Pilot : public Staff
 
 public:
 
-	Pilot(const Airport & airPort, const int experience, const int pay);
+	Pilot();
 
-	Pilot(const Airport & airPort, const int experience, const int pay, const bool highQualification, const  bool largePlan);
+	Pilot(Airport & airPort);
+
+	Pilot(Airport & airPort, const int experience, const int pay);
+
+	Pilot(const Pilot & other);
+
+	Pilot & operator =(const Pilot & other);
+
+	bool operator ==(const Pilot & other);
+
+	Pilot(Airport & airPort, const int experience, const int pay, const bool highQualification, const  bool largePlan);
 
 	static size_t GetNum();
+
+	bool GetParam() const;
+
+	friend std::ostream & operator <<(std::ostream & out, const Pilot & obj);
 };
+
+std::ostream & operator <<(std::ostream & out, const Pilot & obj);
 
 class Stewardess : public Staff
 {
@@ -45,23 +67,27 @@ class Stewardess : public Staff
 
 public:
 
-	Stewardess(const Airport airPort, const int experience, const int pay);
+	Stewardess();
 
-	Stewardess(const Airport airPort, const int experience, const int pay, const bool more5Language);
+	Stewardess(Airport & airPort);
 
-	Stewardess(const Airport airPort, const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian);
+	Stewardess(Airport airPort,  const int experience, const int pay);
 
-	static size_t GetNum();
-};
+	Stewardess(Airport airPort,  const int experience, const int pay, const bool more5Language);
+
+	Stewardess(Airport airPort, const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian);
+	Stewardess(const Stewardess & other);
 
 
-class TicketSeller : public Staff
-{
-	static size_t Num;
+	Stewardess & operator =(const Stewardess & other);
 
-public:
-
-	TicketSeller(const Airport airPort, const int experience, const int pay);
+	bool operator ==(const Stewardess & other);
 
 	static size_t GetNum();
+
+	bool GetParam() const;
+
+	friend std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
 };
+
+std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
