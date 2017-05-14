@@ -48,6 +48,8 @@ public:
 	void SetPilot(const Pilot & flyer);
 
 	void SetStewardess(const Stewardess & stewardess);
+
+	bool GetSizeBPlans() const;
 };
 
 std::ostream & operator <<(std::ostream & out, const  Airport & obj);
