@@ -14,6 +14,8 @@ public:
 	Techology(const Airport & inhere);
 
 	static size_t GetNum();
+
+	~Techology();
 };
 
 class Pilot;
@@ -42,6 +44,10 @@ public:
 
 	size_t SizeStew() const;	
 
+	void Clear();
+
+	~Plan();
+
 };
 
 
@@ -58,6 +64,8 @@ public:
 
 	friend std::ostream & operator <<(std::ostream & out, const BigPlan & obj);
 
+	~BigPlan();
+
 };
 std::ostream & operator <<(std::ostream & out, const BigPlan & obj);
 
@@ -73,6 +81,8 @@ public:
 	static size_t GetNum();
 
 	friend std::ostream & operator <<(std::ostream & out, const SmallPlan & obj);
+
+	~SmallPlan();
 
 };
 std::ostream & operator <<(std::ostream & out, const SmallPlan & obj);
