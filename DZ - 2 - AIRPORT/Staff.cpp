@@ -13,8 +13,8 @@ Staff::Staff()
 
 Staff::Staff(Airport & airPort) : AirPort(airPort)
 {
-	Experience = 0;
-	Pay = 0;
+	Experience = 1;
+	Pay = 80;
 	++Num;
 };
 
@@ -41,16 +41,11 @@ Pilot::Pilot(Airport & airPort) : Staff(airPort)
 	++Num;
 };
 
-Pilot::Pilot(Airport & airPort,  const int experience, const int pay) : Staff(airPort, experience, pay)
-{
-	LargePlan = false;
-	HighQualification = false;
-	airPort.SetPilot(*this);
-	++Num;
-};
+
 
 Pilot::Pilot(const Pilot & other)
 {
+	AirPort = other.AirPort;
 	HighQualification = other.HighQualification;
 	LargePlan = other.LargePlan;
 	Experience = other.Experience;
@@ -60,6 +55,7 @@ Pilot::Pilot(const Pilot & other)
 Pilot & Pilot::operator =(const Pilot & other)
 {
 	if (&other == this) return *this;
+	AirPort = other.AirPort;
 	HighQualification = other.HighQualification;
 	LargePlan = other.LargePlan;
 	Experience = other.Experience;
@@ -120,7 +116,7 @@ std::ostream & operator <<(std::ostream & out, const Stewardess & obj)
 Stewardess::Stewardess()
 {};
 
-Stewardess::Stewardess(Airport & airPort) : Staff(airPort)
+Stewardess::Stewardess(Airport & airPort) : Staff(airPort, 3, 100)
 {
 	English = true;
 	Russian = false;
@@ -129,17 +125,22 @@ Stewardess::Stewardess(Airport & airPort) : Staff(airPort)
 	Chinese = false;
 	More5Language = false;
 	++Num;
-	//airPort.SetStewardess(*this);
+	airPort.SetStewardess(*this);
 };
 
-Stewardess::Stewardess(Airport airPort,  const int experience, const int pay) : Staff(airPort, experience, pay)
+Stewardess::Stewardess(Airport & airPort,  const int experience, const int pay) : Staff(airPort, experience, pay)
 {
 	English = true;
+	Russian = false;
+	French = false;
+	German = false;
+	Chinese = false;
+	More5Language = false;
 	++Num;
-	//airPort.SetStewardess(*this);
+	airPort.SetStewardess(*this);
 };
 
-Stewardess::Stewardess(Airport airPort,  const int experience, const int pay, const bool more5Language) : Staff(airPort, experience, pay)
+Stewardess::Stewardess(Airport & airPort,  const int experience, const int pay, const bool more5Language) : Staff(airPort, experience, pay)
 {
 	More5Language = more5Language;
 	English = true;
@@ -158,10 +159,10 @@ Stewardess::Stewardess(Airport airPort,  const int experience, const int pay, co
 		Chinese = false;
 	}
 	++Num;
-	//airPort.SetStewardess(*this);
+	airPort.SetStewardess(*this);
 };
 
-Stewardess::Stewardess(Airport airPort,  const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian) : Staff(airPort, experience, pay)
+Stewardess::Stewardess(Airport & airPort,  const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian) : Staff(airPort, experience, pay)
 {
 	Russian = russian;
 	English = english;
@@ -170,7 +171,7 @@ Stewardess::Stewardess(Airport airPort,  const int experience, const int pay, co
 	German = german;
 	More5Language = false;
 	++Num;
-	//airPort.SetStewardess(*this);
+	airPort.SetStewardess(*this);
 };
 
 bool Stewardess::GetParam() const
@@ -180,6 +181,7 @@ bool Stewardess::GetParam() const
 
 Stewardess::Stewardess(const Stewardess & other)
 {
+	AirPort = other.AirPort;
 	Russian = other.Russian;
 	English = other.English;
 	French = other.French;
@@ -193,6 +195,7 @@ Stewardess::Stewardess(const Stewardess & other)
 Stewardess & Stewardess::operator =(const Stewardess & other)
 {
 	if (this == &other) return *this;
+	AirPort = other.AirPort;
 	Russian = other.Russian;
 	English = other.English;
 	French = other.French;
