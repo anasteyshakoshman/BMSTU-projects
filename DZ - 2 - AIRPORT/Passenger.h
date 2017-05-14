@@ -29,9 +29,9 @@ public:
 
 	bool GetBaggage() const;
 
-	void SetBaggage(const bool baggage);
-
 	static size_t GetNum();
+
+	~Passenger();
 };
 
 std::ostream & operator <<(std::ostream & out, const  Passenger & obj);
