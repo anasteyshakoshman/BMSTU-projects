@@ -9,6 +9,7 @@ class Flight
 	Airport Departure;      
 	Airport Destination; 
 	std::vector<Passenger> People;
+	std::string Name;
 
 	static size_t Num;
 
