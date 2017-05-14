@@ -1,0 +1,101 @@
+run test_ctor0
+test_ctor0 successed
+__________________________________
+
+run test_ctor1
+test_ctor1 successed
+__________________________________
+
+run test_ctor2
+test_ctor2 successed
+__________________________________
+
+run test_ctor3
+test_ctor3 successed
+__________________________________
+
+run test_from_anf
+test_from_anf successed
+__________________________________
+
+run test_ctor_string
+test_ctor_string successed
+__________________________________
+
+run test_ctor_vec
+test_ctor_vec successed
+__________________________________
+
+run test_ctor_copy
+test_ctor_copy successed
+__________________________________
+
+run test_op_xor
+test_op_xor successed
+__________________________________
+
+run test_op_and
+test_op_and successed
+__________________________________
+
+run test_op_or
+test_op_or successed
+__________________________________
+
+run test_op_not
+test_op_not successed
+__________________________________
+
+run test_op_eq
+test_op_eq successed
+__________________________________
+
+run test_op_more
+test_op_more successed
+__________________________________
+
+run test_it
+test_it successed
+__________________________________
+
+run test_it_begin_end
+test_it_begin_end successed
+__________________________________
+
+run test_access
+test_access successed
+__________________________________
+
+run test_property
+test_property successed
+__________________________________
+
+run test_property1
+test_property1 successed
+__________________________________
+
+run test_property2
+test_property2 successed
+__________________________________
+
+run test_anf
+test_anf successed
+__________________________________
+
+run test_const
+test_const successed
+__________________________________
+
+run test_calc
+test_calc successed
+__________________________________
+
+run test_combo
+test_combo successed
+__________________________________
+
+run test_combo2
+test_combo2 successed
+__________________________________
+
+Для продолжения нажмите любую клавишу . . .
