@@ -78,9 +78,14 @@ void Airport::SetBPlan(const BigPlan & plan)
 	++FreePlans;
 };
 
+bool Airport::GetSizeBPlans() const
+{
+	return BPlans.empty();
+};
+
 void Airport::SetStewardess(const Stewardess & stewardess)
 {
-	if (!BPlans.size() && !SPlans.size()) throw std::logic_error("This airport haven't plans");
+	if (BPlans.empty() && SPlans.empty()) throw std::logic_error("This airport haven't plans");
 	bool add = false;
 	if (stewardess.GetParam())
 	{
@@ -95,7 +100,7 @@ void Airport::SetStewardess(const Stewardess & stewardess)
 			++i;
 		}
 	}
-	else if (!add)
+	if (!add)
 	{
 		size_t i = 0;
 		while (i < SPlans.size() && !add)
@@ -157,6 +162,7 @@ void Airport::SetFlight(const Flight & flight)
 	for (size_t i = 0; i < BPlans.size(); ++i)
 	{
 		if (BPlans[i].SizeFlyers() != 2 && BPlans[i].SizeStew() != 4) notpersonal = true;
+
 	}
 	for (size_t i = 0; i < SPlans.size(); ++i)
 	{
