@@ -11,9 +11,9 @@ Passenger::Passenger(const std::string & fio, Flight & voyage)
 	BigBaggage = false;
 	Pet = false;
 	Voyage = voyage;
-	voyage.SetPassenger(*this);
 	Location = Voyage.GetDeparture().GetLocation();
 	++Num;
+	voyage.SetPassenger(*this);
 };
 
 
@@ -23,11 +23,11 @@ Passenger::Passenger(const std::string & fio, Flight & voyage, const int age, co
 	Age = age;
 	FIO = fio;
 	Voyage = voyage;
-	voyage.SetPassenger(*this);
 	BigBaggage = bigBaggage;
 	Pet = pet;
 	Location = Voyage.GetDeparture().GetLocation();
 	++Num;
+	voyage.SetPassenger(*this);
 };
 
 Passenger & Passenger::operator =(const Passenger & other)
@@ -67,12 +67,17 @@ bool Passenger::GetBaggage() const
 	return BigBaggage;
 };
 
-void Passenger::SetBaggage(const bool baggage)
-{
-	BigBaggage = baggage;
-};
-
 size_t Passenger::GetNum()
 {
 	return Num;
 };
+
+Passenger::~Passenger()
+{
+	FIO.erase();
+	Location.erase();
+	Pet = false;
+	BigBaggage = false;
+	Age = 0;
+	Voyage.Clear();
+}
