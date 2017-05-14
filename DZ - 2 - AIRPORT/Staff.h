@@ -7,8 +7,8 @@ class Staff
 protected:
 	Airport AirPort;
 	int Experience;   //стаж работы
-	static size_t Num;
 	int Pay;   //в долларах
+	static size_t Num;
 
 public:
 
@@ -21,6 +21,10 @@ public:
 	size_t GetNum();
 
 	std::string GetName() const;
+
+	void Clear();
+
+	~Staff();
 };
 
 
@@ -36,8 +40,6 @@ public:
 
 	Pilot(Airport & airPort);
 
-	Pilot(Airport & airPort, const int experience, const int pay);
-
 	Pilot(const Pilot & other);
 
 	Pilot & operator =(const Pilot & other);
@@ -51,6 +53,8 @@ public:
 	bool GetParam() const;
 
 	friend std::ostream & operator <<(std::ostream & out, const Pilot & obj);
+
+	~Pilot();
 };
 
 std::ostream & operator <<(std::ostream & out, const Pilot & obj);
@@ -71,13 +75,13 @@ public:
 
 	Stewardess(Airport & airPort);
 
-	Stewardess(Airport airPort,  const int experience, const int pay);
+	Stewardess(Airport & airPort,  const int experience, const int pay);
 
-	Stewardess(Airport airPort,  const int experience, const int pay, const bool more5Language);
+	Stewardess(Airport & airPort,  const int experience, const int pay, const bool more5Language);
 
-	Stewardess(Airport airPort, const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian);
+	Stewardess(Airport & airPort, const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian);
+	
 	Stewardess(const Stewardess & other);
-
 
 	Stewardess & operator =(const Stewardess & other);
 
@@ -88,6 +92,8 @@ public:
 	bool GetParam() const;
 
 	friend std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
+
+	~Stewardess();
 };
 
 std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
