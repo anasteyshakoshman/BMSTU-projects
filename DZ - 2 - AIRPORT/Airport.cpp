@@ -161,7 +161,7 @@ void Airport::SetFlight(const Flight & flight)
 	bool notpersonal = false;
 	for (size_t i = 0; i < BPlans.size(); ++i)
 	{
-		if (BPlans[i].SizeFlyers() != 2 && BPlans[i].SizeStew() != 4) notpersonal = true;
+		if (BPlans[i].SizeFlyers() != 2 && BPlans[i].SizeStew() != 5) notpersonal = true;
 
 	}
 	for (size_t i = 0; i < SPlans.size(); ++i)
