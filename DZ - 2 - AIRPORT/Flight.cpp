@@ -10,8 +10,9 @@ Flight::Flight(Airport & departure, Airport &  destination)
 {
 	Departure = departure;
 	Destination = destination;
-	destination.SetFlight(*this);
-	departure.SetFlight(*this);
+	Name = departure.GetLocation() + " - " + destination.GetLocation();
+	destination.SetFlight(*this); 
+	departure.SetFlight(*this);    
 	++Num;
 };
 
@@ -24,11 +25,13 @@ Flight::Flight(std::initializer_list<Airport> & airport)    //{departure, destin
 	Departure = *it;
 	++it;
 	Destination = *it;
+	Name = airport.begin()->GetLocation() + " - " + airport.end()->GetLocation();
 	++Num;
 };
 
 void Flight::SetPassenger(const Passenger & human)
 {
+	if (Departure.GetSizeBPlans() && human.GetBaggage()) throw std::logic_error("This airport hasn't big plan for going big baggage");
 	People.push_back(human);
 }
 
@@ -56,6 +59,7 @@ Flight & Flight::operator =(const Flight & other)
 	if (&other == this) return *this;
 	Departure = other.Departure;
 	Destination = other.Destination;
+	Name = other.Name;
 	People = other.People;
 	return *this;
 };
@@ -67,11 +71,13 @@ Flight::Flight(const Flight & other)
 	Departure = other.Departure;
 	Destination = other.Destination;
 	People = other.People;
+	Name = other.Name;
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj)
 {
 	out << "FLIGHT\n";
+	out << "Name : " << obj.Name;
 	out << "Deperture point : " << obj.Departure.GetName() << " ( " << obj.Departure.GetLocation() << " ) " << n;
 	out << "Destination point : " << obj.Destination.GetName() << " ( " << obj.Destination.GetLocation() << " ) " << n;
 	if (obj.People.size()) out << "All passengers : " << obj.People.size() << n;
