@@ -410,22 +410,18 @@ public:
 
 	bool is_monotone() const
 	{
-		size_type num = size();
-		while ((num /= 2) > 0)
+		bool is = true;
+		size_t i = 0;
+		while (i < Func.size() - 1)
 		{
-			size_t i = 0;
-			while (i < num)
+			if (Func[i] > Func[i + 1])
 			{
-				size_type j = num;
-				while (j--)
-				{
-					if (Func[i] > Func[i + num]) return false;
-					++i;
-				}
+				is = false;
+				break;
 			}
-			i += num;
+			++i;
 		}
-		return true;
+		return is;
 	};
 
 
