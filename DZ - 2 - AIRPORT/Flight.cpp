@@ -1,6 +1,7 @@
 #include "Flight.h"
 #include "Passenger.h"
-
+#include "Technology.h" 
+#include "Staff.h"  
 
 size_t Flight::Num = 0;
 
