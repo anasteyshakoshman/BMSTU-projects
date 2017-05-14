@@ -77,7 +77,7 @@ Flight::Flight(const Flight & other)
 std::ostream & operator <<(std::ostream & out, const Flight & obj)
 {
 	out << "FLIGHT\n";
-	out << "Name : " << obj.Name;
+	out << "Name : " << obj.Name << n;
 	out << "Deperture point : " << obj.Departure.GetName() << " ( " << obj.Departure.GetLocation() << " ) " << n;
 	out << "Destination point : " << obj.Destination.GetName() << " ( " << obj.Destination.GetLocation() << " ) " << n;
 	if (obj.People.size()) out << "All passengers : " << obj.People.size() << n;
