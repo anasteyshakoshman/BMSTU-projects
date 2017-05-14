@@ -190,6 +190,20 @@ std::string Airport::GetName() const
 	return Name;
 };
 
+void Airport::Clear()
+{
+	Name.erase();
+	Location.erase();
+	Flights.clear();
+	BPlans.clear();
+	SPlans.clear();
+	FreePlans = 0;
+}
+
+Airport::~Airport()
+{
+	Clear();
+}
 
 
 
