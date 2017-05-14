@@ -1,7 +1,8 @@
 #include "Airport.h"
 #include "Flight.h"
+#include "Technology.h"
 #include "Passenger.h"
-
+#include "Staff.h"  
 
 size_t Airport::Num = 0;
 
@@ -9,13 +10,10 @@ Airport::Airport()
 {};
 
 
-Airport::Airport(const std::string & name, const std::string & location, const int & numplans)
+Airport::Airport(const std::string & name, const std::string & location)
 {
-	if (numplans < 0) throw std::length_error("The quantity of plans can't be negative");
 	Name = name;
 	Location = location;
-	NumPlans = numplans;
-	FreePlans = numplans;
 	++Num;
 };
 
@@ -28,18 +26,20 @@ size_t Airport::GetNum()
 Airport::Airport(const Airport & other)
 {
 	Name = other.Name;
-	NumPlans = other.NumPlans;
 	FreePlans = other.FreePlans;
 	Location = other.Location;
 	Flights = other.Flights;
+	BPlans = other.BPlans;
+	SPlans = other.SPlans;
 };
 
 Airport & Airport::operator =(const Airport & other)
 {
 	if (&other == this) return *this;
 	Name = other.Name;
-	NumPlans = other.NumPlans;
 	FreePlans = other.FreePlans;
+	BPlans = other.BPlans;
+	SPlans = other.SPlans;
 	Location = other.Location;
 	Flights = other.Flights;
 	return *this;
@@ -47,30 +47,126 @@ Airport & Airport::operator =(const Airport & other)
 
 std::ostream & operator <<(std::ostream & out, const  Airport & obj)
 {
-	out << "AIRPORT" << n;
-	out << "Name : " << obj.Name << n;
-	out << "Location : " << obj.Location << n;
+	out << "                A I R P O R T" << n << n;
+	out << "Name :    " << obj.Name << n << n;
+	out << "Location :    " << obj.Location << n << n;
 	size_t i = 1;
-	out << "All flights : " << obj.Flights.size() << n;
+	out << "Flights :" << n;
 	for (auto it = obj.Flights.begin(); it != obj.Flights.end(); ++it)
 	{
 		out << i << ") from " << it->GetDeparture().GetName() << " ( " << it->GetDeparture().GetLocation() << ")";
 		out << " to " << it->GetDestination().GetName() << " ( " << it->GetDestination().GetLocation() << ")" << n;
 		++i;
 	}	
-	out << "All plans : " << obj.NumPlans << n;
-	out << "Free plans : " << obj.FreePlans << n;
+	out << n << n << "Plans :" << n;
+	for (auto it = obj.BPlans.begin(); it != obj.BPlans.end(); ++it)
+	{
+		out << *it << n;
+	}
+	for (auto it = obj.SPlans.begin(); it != obj.SPlans.end(); ++it)
+	{
+		out << *it << n;
+	}
+	out << n << n << "Free plans :    " << obj.FreePlans << n << n << n << n;
+
 	return out;
+};
+
+void Airport::SetBPlan(const BigPlan & plan)
+{
+	BPlans.push_back(plan);
+	++FreePlans;
+};
+
+void Airport::SetStewardess(const Stewardess & stewardess)
+{
+	if (!BPlans.size() && !SPlans.size()) throw std::logic_error("This airport haven't plans");
+	bool add = false;
+	if (stewardess.GetParam())
+	{
+		size_t i = 0;
+		while (i < BPlans.size() && !add)
+		{
+			if (BPlans[i].SizeStew() < 5)
+			{
+				BPlans[i].SetStewardess(stewardess); 
+				add = true;
+			}
+			++i;
+		}
+	}
+	else if (!add)
+	{
+		size_t i = 0;
+		while (i < SPlans.size() && !add)
+		{
+			if (SPlans[i].SizeStew() < 3)
+			{
+				SPlans[i].SetStewardess(stewardess);
+				add = true;
+			}
+			++i;
+		}
+	}
+	if(!add) throw std::logic_error("There aren't more vacancies of stewardesses");
+}; 
+
+void Airport::SetPilot(const Pilot & pilot)
+{
+	if (BPlans.empty() && SPlans.empty()) throw std::logic_error("This airport haven't plans");
+	bool add = false;
+	if (pilot.GetParam())
+	{
+		size_t i = 0;
+		while (i < BPlans.size() && !add)
+		{
+			if (BPlans[i].SizeFlyers() < 2)
+			{
+				BPlans[i].SetPilot(pilot);
+				add = true;
+			}
+			++i;
+		}
+	}
+	if (!add )
+	{
+		size_t i = 0;
+		while (i < SPlans.size() && !add)
+		{
+			if (SPlans[i].SizeFlyers() < 1)
+			{
+				SPlans[i].SetPilot(pilot);
+				add = true;
+			}
+			++i;
+		}
+	}
+	if (!add) throw std::logic_error("There aren't more vacancies of pilots");
+};
+
+void Airport::SetSPlan(const SmallPlan & plan)
+{
+	SPlans.push_back(plan);
+	++FreePlans;
 };
 
 void Airport::SetFlight(const Flight & flight)
 {
-	if (NumPlans - Flights.size() >= 1)
+	if (!FreePlans) throw std::length_error("This airport heven't more plans");
+	bool notpersonal = false;
+	for (size_t i = 0; i < BPlans.size(); ++i)
 	{
-		Flights.push_back(flight);
-		--FreePlans;
+		if (BPlans[i].SizeFlyers() != 2 && BPlans[i].SizeStew() != 4) notpersonal = true;
 	}
-	else throw std::length_error("This airport heven't more plans");
+	for (size_t i = 0; i < SPlans.size(); ++i)
+	{
+		if (SPlans[i].SizeFlyers() != 1 && SPlans[i].SizeStew() != 3) notpersonal = true;
+	}
+	if (notpersonal) throw std::logic_error("This airport can't has flight, because hasn't personal!");
+	Flights.push_back(flight);
+	--FreePlans;
+	
+	 
 };
 
 bool Airport::operator ==(const Airport & other)
