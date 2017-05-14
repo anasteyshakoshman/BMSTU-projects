@@ -20,6 +20,12 @@ size_t Techology::GetNum()
 	return Num;
 };
 
+Techology::~Techology()
+{
+	Inhere.Clear();
+};
+
+
 Plan::Plan(const Airport & inhere, const int maxpas) : Techology(inhere)
 {
 	MaxPas = maxpas;
@@ -36,12 +42,34 @@ void Plan::SetStewardess(const Stewardess & hostess)
 	Hostess.push_back(hostess);
 };
 
+void Plan::Clear()
+{
+	Inhere.Clear();
+	Hostess.clear();
+	Flyers.clear();
+	MaxPas = 0;
+};
 
+Plan::~Plan()
+{
+	Clear();
+};
+
+BigPlan::~BigPlan()
+{
+	Clear();
+};
+
+SmallPlan::~SmallPlan()
+{
+	Clear();
+	BisnessClass = false;
+};
 
 BigPlan::BigPlan(Airport & inhere) : Plan(inhere,  700)
 {
-	inhere.SetBPlan(*this);
 	++Num;
+	inhere.SetBPlan(*this);
 };
 
 size_t BigPlan::GetNum()
@@ -68,9 +96,9 @@ size_t Plan::SizeStew() const
 
 SmallPlan::SmallPlan(Airport & inhere,  bool bisnessclass) : Plan(inhere, 60)
 {
-	inhere.SetSPlan(*this);
 	BisnessClass = bisnessclass;
 	++Num;
+	inhere.SetSPlan(*this);
 };
 
 size_t SmallPlan::GetNum()
