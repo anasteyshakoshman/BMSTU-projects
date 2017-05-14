@@ -37,6 +37,10 @@ public:
 
 	Airport  GetDestination() const;
 
+	void Clear();
+
+	~Flight();
+
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj);
