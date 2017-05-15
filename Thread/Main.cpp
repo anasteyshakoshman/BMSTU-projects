@@ -31,7 +31,7 @@ InfInt C(InfInt n, InfInt k)
 
 void main()
 {
-	InfInt n = 10, k = 6, c = C(n, k);
+	InfInt n = 1000, k = 10, c = C(n, k);   //263409560461970212832400
 	std::cout << c << std::endl;
 	system("pause");
 }
