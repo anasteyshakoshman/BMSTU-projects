@@ -51,8 +51,13 @@ void Sheme(string nameA, string cityA, string nameB, string cityB, string fio)
 
 	Flight AB(A, B);
 	Flight BA(B, A);
+
 	Passenger C(fio, AB);
+	
 	std::cout << A << n << B  << n << AB << BA << n << C << n;
+
+	A.ToFile("A_airport.txt");
+	B.ToFile("B_airport.txt");
 };
 
 
@@ -71,8 +76,6 @@ void Work2()
 
 	Passenger Po("Po", MiOt);
 	Passenger Kim("Kim", MiOt);
-
-
 
 	std::cout << MiOt << n << OtMi << n;
 
@@ -138,6 +141,7 @@ void Work()
 	std::cout << John << n << Kit << n << Stasiy << n << Daniel << Rick << n << Lily << n << Yoko << n;
 };
 
+
 void People()
 {
 	std::string name1, city1, name2, city2, fio;
@@ -158,8 +162,9 @@ void People()
 
 void main()
 {
-	Work2();
-	People();
+	//Work2();
+	//People();
+	Sheme("Iu", "Moscow", "Polwad", "Polsha", "Tim");
 	GetNum();	
 	system("pause");
 };
