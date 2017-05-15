@@ -55,6 +55,11 @@ public:
 	friend std::ostream & operator <<(std::ostream & out, const Pilot & obj);
 
 	~Pilot();
+
+	void ToFile(std::string name) const;
+
+	void ToFile(std::ofstream & file) const;
+
 };
 
 std::ostream & operator <<(std::ostream & out, const Pilot & obj);
@@ -94,6 +99,10 @@ public:
 	friend std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
 
 	~Stewardess();
+
+	void ToFile(std::string name) const;
+
+	void ToFile(std::ofstream & file) const;
 };
 
 std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
