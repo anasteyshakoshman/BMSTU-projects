@@ -408,20 +408,48 @@ public:
 		return (*this)(fs);
 	}
 
+	std::vector<value_type> change(size_t func_size, size_t n) const
+	{
+		std::vector<value_type> tmp;
+		while (n)
+		{
+			tmp.push_back(n % 2);
+			func_size -= 1;
+			n /= 2;
+		}
+		while (func_size)
+		{
+			tmp.push_back(0);
+			func_size -= 1;
+		}
+		std::reverse(tmp.begin(), tmp.end());
+		return tmp;
+	}
+
 	bool is_monotone() const
 	{
-		bool is = true;
+		std::vector<value_type> tmp1, tmp2;
 		size_t i = 0;
-		while (i < Func.size() - 1)
+		while (i < Func.size())
 		{
-			if (Func[i] > Func[i + 1])
+			tmp1 = change(Func.size(), i);
+			size_t j = 1;
+			while (j < Func.size())
 			{
-				is = false;
-				break;
+				tmp2 = change(Func.size(), j);
+				bool log = true;
+				size_t k = 0;
+				while (k < Func.size())
+				{
+					if (tmp1[k] > tmp2[k]) log = false;
+					++k;
+				}
+				if (Func[i] > Func[j] && log == true) return false;
+				++j;
 			}
 			++i;
 		}
-		return is;
+		return true;
 	};
 
 
