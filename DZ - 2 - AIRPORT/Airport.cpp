@@ -56,6 +56,15 @@ std::ostream & operator <<(std::ostream & out, const  Airport & obj)
 	{
 		out << i << ") from " << it->GetDeparture().GetName() << " ( " << it->GetDeparture().GetLocation() << ")";
 		out << " to " << it->GetDestination().GetName() << " ( " << it->GetDestination().GetLocation() << ")" << n;
+		size_t j = 1;
+		if (!it->GetPas().empty())
+		{
+			for (auto p = it->GetPas().begin(); p != it->GetPas().end(); ++p)
+			{
+				out << j << ")" << *p << n;
+				++j;
+			}
+		}		
 		++i;
 	}	
 	out << n << n << "Plans :" << n;
@@ -198,12 +207,52 @@ void Airport::Clear()
 	BPlans.clear();
 	SPlans.clear();
 	FreePlans = 0;
-}
+};
 
 Airport::~Airport()
 {
 	Clear();
-}
+};
 
-
-
+void Airport::ToFile(std::string name) const
+{
+	std::ofstream file(name);
+	file << "A I R P O R T" << n;
+	file << "Name:" << n << Name << n;
+	file << "Location:" << n << Location << n;
+	if (!Flights.empty())
+	{
+		file << "Flights" << n;
+		size_t i = 1;
+		for (auto it = Flights.begin(); it != Flights.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	if (!BPlans.empty())
+	{
+		file << "BigPlans" << n;
+		size_t i = 1;
+		for (auto it = BPlans.begin(); it != BPlans.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	if (!SPlans.empty())
+	{
+		file << "SmallPlans" << n;
+		size_t i = 1;
+		for (auto it = SPlans.begin(); it != SPlans.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}	
+	file << "FreePlans:" << n << FreePlans << n;
+	file.close();
+};
