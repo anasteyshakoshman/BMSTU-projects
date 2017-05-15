@@ -81,3 +81,30 @@ Passenger::~Passenger()
 	Age = 0;
 	Voyage.Clear();
 }
+
+void Passenger::ToFile(std::string name) const
+{
+	std::ofstream file(name);
+	file << "P A S S E N G E R" << n;
+	file << "FIO: " << FIO << n;
+	file << "Location: " << Location << n;
+	file << "Flight: " << Voyage.GetName() << n;
+	if (Age) file << "Age: " << Age << n;
+	if (BigBaggage) file << "Have big baggage" << n;
+	else  file << "Have NOT big baggage" << n;
+	if (Pet) file << "Have pet" << n;
+	else  file << "Have NOT pet" << n;
+	file.close();
+};
+
+void Passenger::ToFile(std::ofstream & file) const
+{
+	file << "FIO: " << FIO << n;
+	file << "Location: " << Location << n;
+	file << "Flight: " << Voyage.GetName() << n;
+	if (Age) file << "Age: " << Age << n;
+	if (BigBaggage) file << "Have big baggage" << n;
+	else  file << "Have NOT big baggage" << n;
+	if (Pet) file << "Have pet" << n;
+	else  file << "Have NOT pet" << n;
+}
