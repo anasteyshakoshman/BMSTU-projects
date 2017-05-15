@@ -400,22 +400,22 @@ public:
 		}
 		delete[] array;
 		return boolean_function(vec);
-	}
+	};
 
 	boolean_function operator()(const std::initializer_list<boolean_function> vars) const
 	{
 		std::vector<boolean_function> fs = vars;
 		return (*this)(fs);
-	}
+	};
 
-	std::vector<value_type> change(size_t func_size, size_t n) const
+	std::vector<value_type> change(size_t func_size, size_t i) const
 	{
 		std::vector<value_type> tmp;
-		while (n)
+		while (i)
 		{
-			tmp.push_back(n % 2);
+			tmp.push_back(i % 2);
 			func_size -= 1;
-			n /= 2;
+			i /= 2;
 		}
 		while (func_size)
 		{
@@ -424,22 +424,22 @@ public:
 		}
 		std::reverse(tmp.begin(), tmp.end());
 		return tmp;
-	}
+	};
 
 	bool is_monotone() const
 	{
 		std::vector<value_type> tmp1, tmp2;
-		size_t i = 0;
-		while (i < Func.size())
+		size_t i = 0, size = Func.size();
+		while (i < size)
 		{
-			tmp1 = change(Func.size(), i);
+			tmp1 = change(size, i);
 			size_t j = 1;
-			while (j < Func.size())
+			while (j < size)
 			{
-				tmp2 = change(Func.size(), j);
+				tmp2 = change(size, j);
 				bool log = true;
 				size_t k = 0;
-				while (k < Func.size())
+				while (k < size)
 				{
 					if (tmp1[k] > tmp2[k]) log = false;
 					++k;
