@@ -5,7 +5,7 @@
 class Passenger;
 
 class Flight
-{
+{ 
 	Airport Departure;      
 	Airport Destination; 
 	std::vector<Passenger> People;
@@ -41,6 +41,13 @@ public:
 
 	~Flight();
 
+	void ToFile(std::string name);
+
+	void ToFile(std::ofstream & file) const;
+
+	std::vector<Passenger> GetPas() const;
+
+	std::string GetName() const;
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj);
