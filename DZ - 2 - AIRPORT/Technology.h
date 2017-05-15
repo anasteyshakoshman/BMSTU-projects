@@ -66,6 +66,10 @@ public:
 
 	~BigPlan();
 
+	void ToFile(std::string name) const;
+
+	void ToFile(std::ofstream & file) const;
+
 };
 std::ostream & operator <<(std::ostream & out, const BigPlan & obj);
 
@@ -83,6 +87,10 @@ public:
 	friend std::ostream & operator <<(std::ostream & out, const SmallPlan & obj);
 
 	~SmallPlan();
+
+	void ToFile(std::string name) const;
+
+	void ToFile(std::ofstream & file) const;
 
 };
 std::ostream & operator <<(std::ostream & out, const SmallPlan & obj);
