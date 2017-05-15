@@ -167,3 +167,135 @@ std::ostream & operator <<(std::ostream & out, const BigPlan & obj)
 	else out << "Find professional stewardesses!!" << n;
 	return out;
 };
+
+
+void BigPlan::ToFile(std::string name) const
+{
+	std::ofstream file(name);
+	file << "B I G P L A N" << n;
+	file << "Belong: " << Inhere.GetName() << n;
+	file << "Max number of passengers: " << MaxPas << n;
+	if (Flyers.size())
+	{
+		file << "Pilots" << n;
+		size_t i = 1;
+		for (auto it = Flyers.begin(); it != Flyers.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't pilots" << n;
+	if (Hostess.size())
+	{
+		file << "Stewardesses" << n;
+		size_t i = 1;
+		for (auto it = Hostess.begin(); it != Hostess.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't stewardesses" << n;
+	file.close();
+};
+
+
+
+void SmallPlan::ToFile(std::string name) const
+{
+	std::ofstream file(name);
+	file << "S M A L L P L A N" << n;
+	file << "Belong: " << Inhere.GetName() << n;
+	file << "Max number of passengers: " << MaxPas << n;
+	if (BisnessClass) file << "Bisness Class" << n;
+	if (Flyers.size())
+	{
+		file << "Pilots" << n;
+		size_t i = 1;
+		for (auto it = Flyers.begin(); it != Flyers.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't pilots" << n;
+	if (Hostess.size())
+	{
+		file << "Stewardesses" << n;
+		size_t i = 1;
+		for (auto it = Hostess.begin(); it != Hostess.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't stewardesses" << n;
+	file.close();
+}
+
+void BigPlan::ToFile(std::ofstream & file) const
+{
+	file << "B I G P L A N" << n;
+	file << "Belong: " << Inhere.GetName() << n;
+	file << "Max number of passengers: " << MaxPas << n;
+	if (Flyers.size())
+	{
+		file << "Pilots" << n;
+		size_t i = 1;
+		for (auto it = Flyers.begin(); it != Flyers.end(); ++it)
+		{
+			file << i << ") " << n;
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hesn't pilots" << n;
+	if (Hostess.size())
+	{
+		file << "Stewardesses" << n;
+		size_t i = 1;
+		for (auto it = Hostess.begin(); it != Hostess.end(); ++it)
+		{
+			file << i << ") " << n;
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't stewardesses" << n;
+};
+
+void SmallPlan::ToFile(std::ofstream & file) const
+{
+	file << "S M A L L P L A N" << n;
+	file << "Belong " << Inhere.GetName() << n;
+	file << "Max number of passengers :" << MaxPas << n;
+	if (Flyers.size())
+	{
+		file << "Pilots:" << n;
+		size_t i = 1;
+		for (auto it = Flyers.begin(); it != Flyers.end(); ++it)
+		{
+			file << i << ") " << n;
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't pilots" << n;
+	if (Hostess.size())
+	{
+		file << "Stewardesses : " << n;
+		size_t i = 1;
+		for (auto it = Hostess.begin(); it != Hostess.end(); ++it)
+		{
+			file << i << ") " << n;
+			it->ToFile(file);
+			++i;
+		}
+	}
+	else file << "Hasn't stewardesses" << n;
+};
