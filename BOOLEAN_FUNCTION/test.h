@@ -2,47 +2,54 @@
 #include <exception>
 #include "boolean_function.h"
 
-
 #define assert(X) { \
 if (!(X)) {\
-	std::cout << "see function:'" << __FUNCTION__ << "' line: " << __LINE__; \
+	std::cout << "see function:'" << __FUNCTION__ << "' line: " << __LINE__ << std::endl; \
 	throw std::logic_error(#X); \
 }\
 }
 
 #define RUN_TEST(func, message) \
 { try {\
+	std::cout << "run " << #func << std::endl; \
 	func(); \
 	std::cout << #func << " " << message << std::endl; \
-} catch (std::exception& e) {\
-	std::cout << #func << " failed. reason: " << e.what() << std::endl; \
+} \
+catch (std::exception& e) {\
+	std::cout << #func << " failed. reason: condition '" << e.what() << "' is false" << std::endl; \
 }\
+	std::cout << "__________________________________" << std::endl << std::endl; \
 }
 
 
+#include "boolean_function.h"
 
-		void test_ctor0()
+	void test_ctor0()
 	{
-			try
-			{
-				boolean_function f("111");
-				assert(false);
-			}
-			catch (...)
-			{
-				assert(true);
-			}
-
-			try
-			{
-				boolean_function f({ true, false, true });
-				assert(false);
-			}
-			catch (...)
-			{
-				assert(true);
-			}
+		bool catch_exc = true;
+		try
+		{
+			boolean_function f("111");
+			catch_exc = false;
 		}
+		catch (...)
+		{
+			catch_exc = true;
+		}
+		assert(catch_exc);
+
+		try
+		{
+			boolean_function f({ true, false, true });
+			catch_exc = false;
+		}
+		catch (...)
+		{
+			catch_exc = true;
+		}
+		assert(catch_exc);
+
+	}
 
 	void test_ctor1()
 	{
@@ -50,15 +57,17 @@ if (!(X)) {\
 		assert(f.size() == 0);
 		assert(f.dimension() == 0);
 
+		bool catch_exc = true;
 		try
 		{
 			f.at(0);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_ctor2()
@@ -67,17 +76,19 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 0);
 			assert(true);
 			f.at(8);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_ctor3()
@@ -86,24 +97,26 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		assert(static_cast<int>(f.at(0)) == 0);
+		assert(static_cast<int>(f.at(1)) == 1);
+		assert(static_cast<int>(f.at(2)) == 1);
+		assert(static_cast<int>(f.at(3)) == 1);
+		assert(static_cast<int>(f.at(4)) == 0);
+		assert(static_cast<int>(f.at(5)) == 0);
+		assert(static_cast<int>(f.at(6)) == 0);
+		assert(static_cast<int>(f.at(7)) == 0);
+
+		bool catch_exc = true;
 		try
 		{
-			assert(static_cast<int>(f.at(0)) == 0);
-			assert(static_cast<int>(f.at(1)) == 1);
-			assert(static_cast<int>(f.at(2)) == 1);
-			assert(static_cast<int>(f.at(3)) == 1);
-			assert(static_cast<int>(f.at(4)) == 0);
-			assert(static_cast<int>(f.at(5)) == 0);
-			assert(static_cast<int>(f.at(6)) == 0);
-			assert(static_cast<int>(f.at(7)) == 0);
-			assert(true);
 			f.at(8);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_ctor_string()
@@ -112,6 +125,7 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 0);
@@ -124,12 +138,13 @@ if (!(X)) {\
 			assert(static_cast<int>(f.at(7)) == 0);
 			assert(true);
 			f.at(8);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_ctor_vec()
@@ -139,6 +154,7 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 1);
@@ -151,12 +167,13 @@ if (!(X)) {\
 			assert(static_cast<int>(f.at(7)) == 0);
 			assert(true);
 			f.at(8);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_ctor_copy()
@@ -170,6 +187,7 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 1);
@@ -182,12 +200,13 @@ if (!(X)) {\
 			assert(static_cast<int>(f.at(7)) == 0);
 			assert(true);
 			f.at(8);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_op_copy()
@@ -198,6 +217,7 @@ if (!(X)) {\
 		assert(f.dimension() == 0);
 		f = g;
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 0);
@@ -208,11 +228,13 @@ if (!(X)) {\
 			assert(static_cast<int>(f.at(5)) == 0);
 			assert(static_cast<int>(f.at(6)) == 0);
 			assert(static_cast<int>(f.at(7)) == 0);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_op_xor()
@@ -226,24 +248,26 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		assert(static_cast<int>(f.at(0)) == 0);
+		assert(static_cast<int>(f.at(1)) == 1);
+		assert(static_cast<int>(f.at(2)) == 0);
+		assert(static_cast<int>(f.at(3)) == 1);
+		assert(static_cast<int>(f.at(4)) == 0);
+		assert(static_cast<int>(f.at(5)) == 0);
+		assert(static_cast<int>(f.at(6)) == 0);
+		assert(static_cast<int>(f.at(7)) == 0);
+
+		bool catch_exc = true;
 		try
 		{
-			assert(static_cast<int>(f.at(0)) == 0);
-			assert(static_cast<int>(f.at(1)) == 1);
-			assert(static_cast<int>(f.at(2)) == 0);
-			assert(static_cast<int>(f.at(3)) == 1);
-			assert(static_cast<int>(f.at(4)) == 0);
-			assert(static_cast<int>(f.at(5)) == 0);
-			assert(static_cast<int>(f.at(6)) == 0);
-			assert(static_cast<int>(f.at(7)) == 0);
-
 			f += boolean_function(64, 5);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_op_and()
@@ -257,6 +281,7 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 0);
@@ -269,12 +294,13 @@ if (!(X)) {\
 			assert(static_cast<int>(f.at(7)) == 0);
 
 			f *= boolean_function(64, 5);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_op_or()
@@ -288,6 +314,7 @@ if (!(X)) {\
 		assert(f.size() == 8);
 		assert(f.dimension() == 3);
 
+		bool catch_exc = true;
 		try
 		{
 			assert(static_cast<int>(f.at(0)) == 0);
@@ -300,12 +327,13 @@ if (!(X)) {\
 			assert(static_cast<int>(f.at(7)) == 0);
 
 			f |= boolean_function(64, 5);
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_op_not()
@@ -316,21 +344,14 @@ if (!(X)) {\
 		assert(f.dimension() == 3);
 		~f;
 
-		try
-		{
-			assert(static_cast<int>(f.at(0)) == 1);
-			assert(static_cast<int>(f.at(1)) == 0);
-			assert(static_cast<int>(f.at(2)) == 0);
-			assert(static_cast<int>(f.at(3)) == 0);
-			assert(static_cast<int>(f.at(4)) == 1);
-			assert(static_cast<int>(f.at(5)) == 1);
-			assert(static_cast<int>(f.at(6)) == 1);
-			assert(static_cast<int>(f.at(7)) == 1);
-		}
-		catch (...)
-		{
-			assert(true);
-		}
+		assert(static_cast<int>(f.at(0)) == 1);
+		assert(static_cast<int>(f.at(1)) == 0);
+		assert(static_cast<int>(f.at(2)) == 0);
+		assert(static_cast<int>(f.at(3)) == 0);
+		assert(static_cast<int>(f.at(4)) == 1);
+		assert(static_cast<int>(f.at(5)) == 1);
+		assert(static_cast<int>(f.at(6)) == 1);
+		assert(static_cast<int>(f.at(7)) == 1);
 	}
 
 	void test_op_eq()
@@ -350,15 +371,19 @@ if (!(X)) {\
 		assert(f >= boolean_function(14, 3));
 		assert(!(f >= boolean_function("11110000")));
 		assert((f >= boolean_function("00110000")));
+
+
+		bool catch_exc = true;
 		try
 		{
 			f >= boolean_function("00110110");
-			assert(false);
+			catch_exc = false;
 		}
 		catch (...)
 		{
-			assert(true);
+			catch_exc = true;
 		}
+		assert(catch_exc);
 	}
 
 	void test_it()
@@ -457,6 +482,8 @@ if (!(X)) {\
 		assert(boolean_function("0110").weight() == 2);
 
 		assert(boolean_function("0001").is_monotone());
+		assert(boolean_function("0001001101111111").is_monotone());
+		assert(!boolean_function("00101010").is_monotone());
 	}
 
 	void test_anf()
@@ -521,23 +548,23 @@ if (!(X)) {\
 		boolean_function AND("0001");
 
 		// c(x0, x1, y, z0, z1) = G(x0+x1, y, z0*z1);
-		/*boolean_function c = G({
+		boolean_function c = G({
 			XOR({ x0, x1 }),
 			y,
 			AND({ z0, z1 })
-		});*/
+		});
 
-		//std::vector<boolean_function::value_type> coef = c.anf();
+		std::vector<boolean_function::value_type> coef = c.anf();
 
-		//assert(!coef[0]);
-		//assert(!coef[1]);
-		//assert(!coef[2]);
-		//assert(coef[4 + 1]); // x0y
-		//assert(coef[4 + 2]); // x1y
-		//assert(coef[16 + 8 + 1]);  // z0z1x0
-		//assert(coef[16 + 8 + 2]); // z0z1x0
-		//assert(coef[16 + 8 + 4]);  // z0z1y
-		//assert(!coef[63]);
+		assert(!coef[0]);
+		assert(!coef[1]);
+		assert(!coef[2]);
+		assert(coef[4 + 1]); // x0y
+		assert(coef[4 + 2]); // x1y
+		assert(coef[16 + 8 + 1]);  // z0z1x0
+		assert(coef[16 + 8 + 2]); // z0z1x0
+		assert(coef[16 + 8 + 4]);  // z0z1y
+		assert(!coef[31]);
 	}
 
 	void test_combo2()
