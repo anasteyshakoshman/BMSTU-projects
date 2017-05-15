@@ -54,6 +54,8 @@ public:
 	void Clear();
 
 	~Airport();
+
+	void ToFile(std::string name) const;
 };
 
 std::ostream & operator <<(std::ostream & out, const  Airport & obj);
