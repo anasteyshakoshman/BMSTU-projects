@@ -247,6 +247,63 @@ Stewardess::~Stewardess()
 	English = false;
 	French = false;
 	More5Language = false;
+};
+
+void Stewardess::ToFile(std::string name) const
+{
+	std::ofstream file(name);
+	file << "S T E W A R D E S S" << n;
+	if (Pay) file << "Pay : " << Pay << n;
+	if (Experience) file << "Experience: " << Experience << n;
+	if (More5Language) file << "Know more than 5 language" << n;
+	else
+	{
+		if (English) file << "Know english language" << n;
+		if (French) file << "Know french language" << n;
+		if (German) file << "Know german language" << n;
+		if (Russian) file << "Know russian language" << n;
+		if (Chinese) file << "Know chinese language" << n;
+	}
+	file.close();
+};
+
+void Pilot::ToFile(std::string name) const
+{
+	std::ofstream file(name);
+	file << "P I L O T" << n;
+	if (Pay) file << "Pay : " << Pay << n;
+	if (Experience) file << "Experience : " << Experience << n;
+	if (LargePlan) file << "The ability to operate large plan" << n;
+	if (HighQualification) file << "High Qualification" << n;
+	file.close();
+};
+
+void Pilot::ToFile(std::ofstream & file) const
+{
+	file << "P I L O T" << n;
+	if (Pay) file << "Pay : " << Pay << n;
+	if (Experience) file << "Experience : " << Experience << n;
+	if (LargePlan) file << "The ability to operate large plan" << n;
+	if (HighQualification) file << "High Qualification" << n;
 }
+
+
+
+void Stewardess::ToFile(std::ofstream & file) const
+{
+	file << "S T E W A R D E S S" << n;
+	if (Pay) file << "Pay : " << Pay << n;
+	if (Experience) file << "Experience: " << Experience << n;
+	if (More5Language) file << "Know more than 5 language" << n;
+	else
+	{
+		if (English) file << "Know english language" << n;
+		if (French) file << "Know french language" << n;
+		if (German) file << "Know german language" << n;
+		if (Russian) file << "Know russian language" << n;
+		if (Chinese) file << "Know chinese language" << n;
+	}
+};
+
 
 
