@@ -107,3 +107,51 @@ Flight::~Flight()
 {
 	Clear();
 };
+
+void Flight::ToFile(std::string name)
+{
+	std::ofstream file(name);
+	file << "F L I G H T" << n;
+	file << "Name: " << Name << n;
+	file << "Deperture: " << Departure.GetName() << n;
+	file << "Destination: "  << Destination.GetName() << n;
+	if (!People.empty())
+	{
+		size_t i = 1;
+		for (auto it = People.begin(); it != People.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}
+	file.close();
+};
+
+void Flight::ToFile(std::ofstream & file) const
+{
+	file << "F L I G H T" << n;
+	file << "Name: " << Name << n;
+	file << "Deperture: " << Departure.GetName() << n;
+	file << "Destination: " << Destination.GetName() << n;
+	if (!People.empty())
+	{
+		size_t i = 1;
+		for (auto it = People.begin(); it != People.end(); ++it)
+		{
+			file << i << ") ";
+			it->ToFile(file);
+			++i;
+		}
+	}	
+};
+
+std::string Flight::GetName() const
+{
+	return Name;
+};
+
+std::vector<Passenger> Flight::GetPas() const
+{
+	return People;
+};
