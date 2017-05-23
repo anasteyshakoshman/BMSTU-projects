@@ -8,24 +8,7 @@
 #include <string>
 
 
-class TRAII
-{
-public:
 
-	TNotCopyable * Des;
-
-	TRAII() : Des(nullptr)
-	{}
-
-	TRAII(TNotCopyable * filename) : Des(filename)
-	{}
-
-	~TRAII()
-	{
-		Des->Close();
-	}
-
-};
 
 
 struct FileAlreadyOpened : public std::exception
@@ -37,7 +20,7 @@ struct FileAlreadyOpened : public std::exception
 
 class TNotCopyable
 {
-	
+
 
 	FILE * Descriptor;
 
@@ -73,6 +56,26 @@ public:
 	{
 		return Descriptor;
 	}
+};
+
+
+class TRAII
+{
+public:
+
+	TNotCopyable * Des;
+
+	TRAII() : Des(nullptr)
+	{}
+
+	TRAII(TNotCopyable * filename) : Des(filename)
+	{}
+
+	~TRAII()
+	{
+		Des->Close();
+	}
+
 };
 
 #endif // __NOTCOPYABLE_INCLUDED__
