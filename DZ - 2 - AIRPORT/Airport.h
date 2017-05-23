@@ -6,6 +6,7 @@ class BigPlan;
 class SmallPlan;
 class Stewardess;
 class Pilot;
+class Passenger;
 
 class Airport
 {
@@ -51,11 +52,25 @@ public:
 
 	bool GetSizeBPlans() const;
 
+	void SetName(const std::string name);
+
+	void SetLocation(const std::string loc);
+
 	void Clear();
 
 	~Airport();
 
-	void ToFile(std::string name) const;
+	void ToFile(const std::string name) const;
+
+	void FromFile(const std::string & way);
+
+	void SetFreePlans(const int num);
+
+	void SetPassenger(Flight & flight, const Passenger & human);
+
+private:
+
+	std::string Sheme(const std::string) const;
 };
 
 std::ostream & operator <<(std::ostream & out, const  Airport & obj);
