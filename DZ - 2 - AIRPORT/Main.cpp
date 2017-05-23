@@ -53,11 +53,6 @@ void Sheme(string nameA, string cityA, string nameB, string cityB, string fio)
 	Flight BA(B, A);
 
 	Passenger C(fio, AB);
-	
-	std::cout << A << n << B  << n << AB << BA << n << C << n;
-
-	A.ToFile("A_airport.txt");
-	B.ToFile("B_airport.txt");
 };
 
 
@@ -156,7 +151,29 @@ void People()
 	std::cout << "Enter fio of passenger : " << n;
 	std::cin >> fio;
 	Sheme(name1, city1, name2, city2, fio);
-}
+};
+
+
+void File()
+{
+	Airport A("WonderLand", "Chikago");
+	Airport B("CrazyLand", "Munhen");
+
+	BPlan(A);
+	SPlan(A);
+	SPlan(B);
+	SPlan(B);
+
+	Flight AB(A, B);
+	Flight BA(B, A);
+
+	A.ToFile("A_airport.txt");
+
+	Airport I;
+	I.FromFile("A_airoport.txt");
+	std::cout << I << n;
+};
+
 
 
 
@@ -164,7 +181,10 @@ void main()
 {
 	//Work2();
 	//People();
-	Sheme("Iu", "Moscow", "Polwad", "Polsha", "Tim");
+	//Sheme("Iu", "Moscow", "Polwad", "Polsha", "Tim");
+	File();
 	GetNum();	
 	system("pause");
 };
+
+
