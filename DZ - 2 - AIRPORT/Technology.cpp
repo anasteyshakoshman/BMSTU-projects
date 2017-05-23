@@ -8,10 +8,35 @@ size_t BigPlan::Num = 0;
 size_t SmallPlan::Num = 0;
 size_t Techology::Num = 0;
 
+BigPlan::BigPlan() {};
+
+SmallPlan::SmallPlan() {};
+
+Plan::Plan() {};
+
+Techology::Techology() {};
+
 Techology::Techology(const Airport & inhere)
 {
 	Inhere = inhere;
 	++Num;
+};
+
+void SmallPlan::SetAir(const Airport & inhere)
+{
+	Inhere = inhere;
+};
+
+void BigPlan::SetAir(const Airport & inhere)
+{
+	Inhere = inhere;
+};
+
+
+void Plan::SetNumPas(const int num)
+{
+	if (num < 0 || num > 700) throw std::logic_error("Uncorrect quantity of passengers");
+	MaxPas = num;
 };
 
 
@@ -169,6 +194,8 @@ std::ostream & operator <<(std::ostream & out, const BigPlan & obj)
 };
 
 
+
+
 void BigPlan::ToFile(std::string name) const
 {
 	std::ofstream file(name);
@@ -246,56 +273,47 @@ void BigPlan::ToFile(std::ofstream & file) const
 	if (Flyers.size())
 	{
 		file << "Pilots" << n;
-		size_t i = 1;
 		for (auto it = Flyers.begin(); it != Flyers.end(); ++it)
 		{
-			file << i << ") " << n;
 			it->ToFile(file);
-			++i;
 		}
 	}
-	else file << "Hesn't pilots" << n;
 	if (Hostess.size())
 	{
 		file << "Stewardesses" << n;
-		size_t i = 1;
 		for (auto it = Hostess.begin(); it != Hostess.end(); ++it)
 		{
-			file << i << ") " << n;
 			it->ToFile(file);
-			++i;
 		}
 	}
-	else file << "Hasn't stewardesses" << n;
 };
+
+void SmallPlan::SetBisness(const bool bis)
+{
+	BisnessClass = bis;
+}
 
 void SmallPlan::ToFile(std::ofstream & file) const
 {
 	file << "S M A L L P L A N" << n;
-	file << "Belong " << Inhere.GetName() << n;
-	file << "Max number of passengers :" << MaxPas << n;
+	file << "Belong: " << Inhere.GetName() << n;
+	file << "Max number of passengers: " << MaxPas << n;
+	if (BisnessClass) file << "Bisness class" << n;
+	else file << "Econom class" << n;
 	if (Flyers.size())
 	{
-		file << "Pilots:" << n;
-		size_t i = 1;
+		file << "Pilots" << n;
 		for (auto it = Flyers.begin(); it != Flyers.end(); ++it)
 		{
-			file << i << ") " << n;
 			it->ToFile(file);
-			++i;
 		}
 	}
-	else file << "Hasn't pilots" << n;
 	if (Hostess.size())
 	{
-		file << "Stewardesses : " << n;
-		size_t i = 1;
+		file << "Stewardesses" << n;
 		for (auto it = Hostess.begin(); it != Hostess.end(); ++it)
 		{
-			file << i << ") " << n;
 			it->ToFile(file);
-			++i;
 		}
 	}
-	else file << "Hasn't stewardesses" << n;
 };
