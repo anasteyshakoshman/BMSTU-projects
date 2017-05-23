@@ -25,6 +25,10 @@ public:
 	void Clear();
 
 	~Staff();
+
+	void SetPay(const int pay);
+
+	void SetExpr(const int expr);
 };
 
 
@@ -59,6 +63,10 @@ public:
 	void ToFile(std::string name) const;
 
 	void ToFile(std::ofstream & file) const;
+
+	void SetQual(const bool qual);
+
+	void SetLargePlan(const bool log);
 
 };
 
@@ -103,6 +111,18 @@ public:
 	void ToFile(std::string name) const;
 
 	void ToFile(std::ofstream & file) const;
+
+	void SetLanguage(const bool);
+
+	void SetEnglish(const bool);
+
+	void SetFrench(const bool);
+
+	void SetChinese(const bool);
+
+	void SetRussian(const bool);
+
+	void SetGerman(const bool);
 };
 
 std::ostream & operator <<(std::ostream & out, const Stewardess & obj);
