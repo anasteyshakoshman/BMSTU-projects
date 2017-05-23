@@ -20,7 +20,7 @@ Flight::Flight(Airport & departure, Airport &  destination)
 
 Flight::Flight(std::initializer_list<Airport> & airport)    //{departure, destination}
 {
-	if (airport.size() > 2) throw std::length_error("Object 'Flight' can have just 2 parametres");
+	if (airport.size() > 2) throw std::length_error("Object 'Flight' can have just 2 airports");
 	auto it = airport.begin();
 	Departure = *it;
 	++it;
@@ -31,9 +31,11 @@ Flight::Flight(std::initializer_list<Airport> & airport)    //{departure, destin
 
 void Flight::SetPassenger(const Passenger & human)
 {
-	if (Departure.GetSizeBPlans() && human.GetBaggage()) throw std::logic_error("This airport hasn't big plan for going big baggage");
+	if (!Departure.GetSizeBPlans() && human.GetBaggage()) throw std::logic_error("This airport hasn't big plan for going big baggage");
 	People.push_back(human);
-}
+	Departure.SetPassenger(*this, human);
+	Destination.SetPassenger(*this, human);
+};
 
 
 Flight::Flight()
@@ -134,17 +136,24 @@ void Flight::ToFile(std::ofstream & file) const
 	file << "Name: " << Name << n;
 	file << "Deperture: " << Departure.GetName() << n;
 	file << "Destination: " << Destination.GetName() << n;
-	if (!People.empty())
+	if (People.size())
 	{
-		size_t i = 1;
 		for (auto it = People.begin(); it != People.end(); ++it)
 		{
-			file << i << ") ";
 			it->ToFile(file);
-			++i;
 		}
 	}	
 };
+
+void Flight::SetDeparture(const Airport & air)
+{
+	Departure = air;
+}
+
+void Flight::SetDestination(const Airport & air)
+{
+	Destination = air;
+}
 
 std::string Flight::GetName() const
 {
