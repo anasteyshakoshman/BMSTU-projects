@@ -99,10 +99,10 @@ void Passenger::ToFile(std::string name) const
 
 void Passenger::ToFile(std::ofstream & file) const
 {
-	file << "FIO: " << FIO << n;
-	file << "Location: " << Location << n;
+	file << "FIO:" << FIO << n;
+	file << "Location:" << Location << n;
 	file << "Flight: " << Voyage.GetName() << n;
-	if (Age) file << "Age: " << Age << n;
+	file << "Age: " << Age << n;
 	if (BigBaggage) file << "Have big baggage" << n;
 	else  file << "Have NOT big baggage" << n;
 	if (Pet) file << "Have pet" << n;
