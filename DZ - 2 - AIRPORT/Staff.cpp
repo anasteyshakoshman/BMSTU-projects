@@ -40,6 +40,15 @@ Staff::~Staff()
 	Clear();
 };
 
+void Staff::SetPay(const int pay)
+{
+	Pay = pay;
+};
+
+void Staff::SetExpr(const int expr)
+{
+	Experience = expr;
+};
 
 
 Pilot::Pilot()
@@ -51,6 +60,16 @@ Pilot::Pilot(Airport & airPort) : Staff(airPort)
 	HighQualification = false;
 	airPort.SetPilot(*this);
 	++Num;
+};
+
+void Pilot::SetQual(const bool qual)
+{
+	HighQualification = qual;
+};
+
+void Pilot::SetLargePlan(const bool log)
+{
+	LargePlan = log;
 };
 
 
@@ -123,11 +142,11 @@ std::ostream & operator <<(std::ostream & out, const Stewardess & obj)
 	if (obj.More5Language) out << "Know more than 5 language" << n;
 	else
 	{
-		if (obj.English) out << "Know english language" << n;
-		if (obj.French) out << "Know french language" << n;
-		if (obj.German) out << "Know german language" << n;
-		if (obj.Russian) out << "Know russian language" << n;
-		if (obj.Chinese) out << "Know chinese language" << n;
+		if (obj.English) out << "Know english" << n;
+		if (obj.French) out << "Know french" << n;
+		if (obj.German) out << "Know german" << n;
+		if (obj.Russian) out << "Know russian" << n;
+		if (obj.Chinese) out << "Know chinese" << n;
 	}
 	return out;
 };
@@ -179,6 +198,45 @@ Stewardess::Stewardess(Airport & airPort,  const int experience, const int pay, 
 	}
 	++Num;
 	airPort.SetStewardess(*this);
+};
+
+void Stewardess::SetLanguage(const bool lang)
+{
+	More5Language = lang;
+	English = true;
+	Russian = true;
+	German = true;
+	Chinese = true;
+	French = true;
+};
+
+void Stewardess::SetEnglish(const bool lang)
+{
+	English = lang;
+};
+
+void Stewardess::SetFrench(const bool lang)
+{
+	More5Language = false;
+	French = lang;
+};
+
+void Stewardess::SetChinese(const bool lang)
+{
+	More5Language = false;
+	Chinese = lang;
+};
+
+void Stewardess::SetRussian(const bool lang)
+{
+	More5Language = false;
+	Russian = lang;
+};
+
+void Stewardess::SetGerman(const bool lang)
+{
+	More5Language = false;
+	German = lang;
 };
 
 Stewardess::Stewardess(Airport & airPort,  const int experience, const int pay, const  bool english, const  bool french, const  bool chinese, const  bool german, const bool russian) : Staff(airPort, experience, pay)
@@ -258,11 +316,11 @@ void Stewardess::ToFile(std::string name) const
 	if (More5Language) file << "Know more than 5 language" << n;
 	else
 	{
-		if (English) file << "Know english language" << n;
-		if (French) file << "Know french language" << n;
-		if (German) file << "Know german language" << n;
-		if (Russian) file << "Know russian language" << n;
-		if (Chinese) file << "Know chinese language" << n;
+		if (English) file << "Know english" << n;
+		if (French) file << "Know french" << n;
+		if (German) file << "Know german" << n;
+		if (Russian) file << "Know russian" << n;
+		if (Chinese) file << "Know chinese" << n;
 	}
 	file.close();
 };
@@ -284,7 +342,9 @@ void Pilot::ToFile(std::ofstream & file) const
 	if (Pay) file << "Pay : " << Pay << n;
 	if (Experience) file << "Experience : " << Experience << n;
 	if (LargePlan) file << "The ability to operate large plan" << n;
+	else file << "Hasn't ability to operate large plan" << n;
 	if (HighQualification) file << "High Qualification" << n;
+	else file << "Hasn't high qualification" << n;
 }
 
 
@@ -292,16 +352,21 @@ void Pilot::ToFile(std::ofstream & file) const
 void Stewardess::ToFile(std::ofstream & file) const
 {
 	file << "S T E W A R D E S S" << n;
-	if (Pay) file << "Pay : " << Pay << n;
-	if (Experience) file << "Experience: " << Experience << n;
+	file << "Pay : " << Pay << n;
+	file << "Experience: " << Experience << n;
 	if (More5Language) file << "Know more than 5 language" << n;
 	else
 	{
-		if (English) file << "Know english language" << n;
-		if (French) file << "Know french language" << n;
-		if (German) file << "Know german language" << n;
-		if (Russian) file << "Know russian language" << n;
-		if (Chinese) file << "Know chinese language" << n;
+		if (English) file << "Know english" << n;
+		else  file << "Don't know english" << n;
+		if (French) file << "Know french" << n;
+		else  file << "Don't know french" << n;
+		if (German) file << "Know german" << n;
+		else  file << "Don't know german" << n;
+		if (Russian) file << "Know russian" << n;
+		else  file << "Don't know russian" << n;
+		if (Chinese) file << "Know chinese" << n;
+		else  file << "Don't know chinese" << n;
 	}
 };
 
