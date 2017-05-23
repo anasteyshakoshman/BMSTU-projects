@@ -48,6 +48,10 @@ public:
 	std::vector<Passenger> GetPas() const;
 
 	std::string GetName() const;
+
+	void SetDeparture(const Airport & air);
+
+	void SetDestination(const Airport & air);
 };
 
 std::ostream & operator <<(std::ostream & out, const Flight & obj);
