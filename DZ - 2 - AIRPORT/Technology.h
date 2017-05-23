@@ -11,6 +11,8 @@ protected:
 
 public:
 
+	Techology();
+
 	Techology(const Airport & inhere);
 
 	static size_t GetNum();
@@ -32,6 +34,8 @@ protected:
 
 public:
 
+	Plan();
+
 	Plan(const Airport & inhere, const int maxpas);
 
 	static size_t GetNum();
@@ -48,6 +52,8 @@ public:
 
 	~Plan();
 
+	void SetNumPas(const int num);
+
 };
 
 
@@ -56,6 +62,8 @@ class BigPlan : public Plan
 	static size_t Num;
 
 public:
+
+	BigPlan();
 	
 	BigPlan(Airport & inhere);
 
@@ -70,6 +78,8 @@ public:
 
 	void ToFile(std::ofstream & file) const;
 
+	void SetAir(const Airport & inhere);
+
 };
 std::ostream & operator <<(std::ostream & out, const BigPlan & obj);
 
@@ -80,6 +90,8 @@ class SmallPlan : public Plan
 
 public:
 
+	SmallPlan();
+
 	SmallPlan(Airport & inhere, bool bisnessclass);
 
 	static size_t GetNum();
@@ -88,9 +100,12 @@ public:
 
 	~SmallPlan();
 
+	void SetAir(const Airport & inhere);
+
+	void SetBisness(const bool bis);
+
 	void ToFile(std::string name) const;
 
 	void ToFile(std::ofstream & file) const;
-
 };
 std::ostream & operator <<(std::ostream & out, const SmallPlan & obj);
